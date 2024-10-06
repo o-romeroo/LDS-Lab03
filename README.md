@@ -1,7 +1,9 @@
 # LDS-Lab03
 
-#
+### Diagrama de Caso de Uso
+![User Case](./images/diagrama_usercase_lab03.png)
 
+### Histórias de Usuário
 | História de Usuário | Como | Quero | Para |
 |-------------------------|-----------------|-----------------------------------------|------------------------------------------------|
 | Realizar Cadastro |	Aluno	| Poder se cadastrar no sistema	| Ter minhas informações no sistema |
