@@ -4,7 +4,7 @@
 ![User Case](./images/diagrama_usercase_lab03.png)
 
 ### Diagrama de Classe
-![Class Diagram](./images/diagrama_classe_lab03.PNG)
+![Class Diagram](./images/diagrama_de_classe_lab03.PNG)
 
 ### Histórias de Usuário
 | História de Usuário | Como | Quero | Para |
