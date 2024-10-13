@@ -6,6 +6,9 @@
 ### Diagrama de Classe
 ![Class Diagram](./images/diagrama_de_classe_lab03.PNG)
 
+### Diagrama de Componente
+![Component Diagram](./images/diagrama_de_component.png)
+
 ### Histórias de Usuário
 | História de Usuário | Como | Quero | Para |
 |-------------------------|-----------------|-----------------------------------------|------------------------------------------------|
