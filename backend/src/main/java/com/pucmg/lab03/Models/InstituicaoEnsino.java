@@ -10,8 +10,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -19,15 +17,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Table(name = "instituicao_ensino")
 @Entity
-@Table(name = "usuario")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Usuario {
-    
+@NoArgsConstructor
+public class InstituicaoEnsino {
+        
     @Column
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,20 +33,9 @@ public class Usuario {
     @Column
     private String nome;
 
-    @Column
-    private String login; 
-
-    @Column
-    private String senha;
-
-    // Lista de transações em que o usuário é o remetente
-    @OneToMany(mappedBy = "remetente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "instituicaoEnsino", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Transacao> transacoesEnviadas;
+    private List<Vantagem> vantagens;
 
-    // Lista de transações em que o usuário é o destinatário
-    @OneToMany(mappedBy = "destinatario", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Transacao> transacoesRecebidas;
 
 }
