@@ -1,6 +1,9 @@
 package com.pucmg.lab03.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
+import java.time.LocalDateTime;
+import org.springframework.stereotype.Service;
 
 import com.pucmg.lab03.Models.Aluno;
 import com.pucmg.lab03.Models.Empresa;
@@ -12,6 +15,7 @@ import com.pucmg.lab03.Repositories.UsuarioRepository;
 
 import jakarta.transaction.Transactional;
 
+@Service
 public class TransacaoService {
 
     @Autowired
@@ -26,17 +30,14 @@ public class TransacaoService {
     @Autowired
     private AlunoService alunoService;
 
+    @Transactional
     public void transferirMoedas(Usuario remetente, Usuario destinatario, int valor, String motivo) {
         Transacao transacao = new Transacao();
 
-        remetente = usuarioRepository.findById(remetente.getId()).get();
-        destinatario = usuarioRepository.findById(destinatario.getId()).get();
+        remetente = usuarioRepository.findById(remetente.getId()).orElseThrow(() -> new RuntimeException("Remetente não encontrado"));
+        destinatario = usuarioRepository.findById(destinatario.getId()).orElseThrow(() -> new RuntimeException("Destinatário não encontrado"));
 
-        if (remetente == null || destinatario == null) {
-            throw new RuntimeException("Usuário não encontrado");
-        }
-
-        if (remetente == destinatario) {
+        if (remetente.equals(destinatario)) {
             throw new RuntimeException("Não é possível transferir moedas para você mesmo");
         }
 
@@ -44,12 +45,13 @@ public class TransacaoService {
             throw new RuntimeException("Valor inválido");
         }
 
-        if (remetente instanceof Professor || remetente instanceof Aluno &&
-            destinatario instanceof Aluno || destinatario instanceof Empresa) {
+        // Verificação correta dos tipos de remetente e destinatário
+        if ((remetente instanceof Professor || remetente instanceof Aluno) &&
+            (destinatario instanceof Aluno || destinatario instanceof Empresa)) {
 
             int saldoRemetente;
 
-            // Verifica e realiza o cast para obter o saldo do remetente
+            // Obtém o saldo do remetente com o tipo correto
             if (remetente instanceof Professor) {
                 saldoRemetente = ((Professor) remetente).getSaldoMoedas();
             } else if (remetente instanceof Aluno) {
@@ -57,10 +59,13 @@ public class TransacaoService {
             } else {
                 throw new RuntimeException("Tipo de remetente inválido");
             }
+
+            // Define os dados da transação antes de persistir
             transacao.setRemetente(remetente);
             transacao.setDestinatario(destinatario);
             transacao.setMontante(valor);
             transacao.setMotivo(motivo);
+            transacao.setData(LocalDateTime.now());
             salvarTransacao(transacao);
 
             // Verifica se o saldo é suficiente para a transação
@@ -74,22 +79,23 @@ public class TransacaoService {
                     alunoService.salvarAluno((Aluno) remetente);
                 }
 
-                // Atualiza o saldo do destinatário se for aluno, já que empresa não tem saldo
+                // Atualiza o saldo do destinatário se for Aluno (Empresa não tem saldo)
                 if (destinatario instanceof Aluno) {
                     ((Aluno) destinatario).setSaldoMoedas(((Aluno) destinatario).getSaldoMoedas() + valor);
-                    alunoService.salvarAluno((Aluno) remetente);
+                    ((Aluno) destinatario).setTotalMoedasRecebidas(((Aluno) destinatario).getTotalMoedasRecebidas() + valor);
+                    alunoService.salvarAluno((Aluno) destinatario); // Corrigido para salvar o destinatário
                 }
 
             } else {
                 throw new RuntimeException("Saldo insuficiente");
             }
+        } else {
+            throw new RuntimeException("Tipos de remetente ou destinatário inválidos para a transação");
         }
-
     }
 
     @Transactional
     public Transacao salvarTransacao(Transacao transacao) {
         return transacaoRepository.save(transacao);
     }
-
 }
