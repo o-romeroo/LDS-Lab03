@@ -32,7 +32,9 @@ public class TransacaoController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @Operation(description = "Transfere moedas de um professor para aluno")
+    @Operation(description = "Transfere moedas de um professor para aluno.<br><br><b>remetenteId</b> é o <b>ID</b> do professor que está transferindo as moedas.<br>"+
+    "<b>destinatarioId</b> é o <b>ID</b> do aluno que está recebendo as moedas.<br><b>valor</b> é a quantidade de moedas a ser transferida.<br><b>motivo</b>"
+    +"é a justificativa da transferência.")
     @PostMapping("professor/transferencia")
     public ResponseEntity<String> transferirMoedas(@RequestBody TransferenciaRequestDTO transacaoRequest) {
 
