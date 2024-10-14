@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 
 import com.pucmg.lab03.Models.Aluno;
-import com.pucmg.lab03.Models.Empresa;
 import com.pucmg.lab03.Models.Professor;
 import com.pucmg.lab03.Models.Transacao;
 import com.pucmg.lab03.Models.Usuario;
@@ -31,11 +30,13 @@ public class TransacaoService {
     private AlunoService alunoService;
 
     @Transactional
-    public void transferirMoedas(Usuario remetente, Usuario destinatario, int valor, String motivo) {
+    public void professorTransferirMoedas(Usuario remetente, Usuario destinatario, int valor, String motivo) {
         Transacao transacao = new Transacao();
 
-        remetente = usuarioRepository.findById(remetente.getId()).orElseThrow(() -> new RuntimeException("Remetente não encontrado"));
-        destinatario = usuarioRepository.findById(destinatario.getId()).orElseThrow(() -> new RuntimeException("Destinatário não encontrado"));
+        remetente = usuarioRepository.findById(remetente.getId())
+                .orElseThrow(() -> new RuntimeException("Remetente não encontrado"));
+        destinatario = usuarioRepository.findById(destinatario.getId())
+                .orElseThrow(() -> new RuntimeException("Destinatário não encontrado"));
 
         if (remetente.equals(destinatario)) {
             throw new RuntimeException("Não é possível transferir moedas para você mesmo");
@@ -46,19 +47,9 @@ public class TransacaoService {
         }
 
         // Verificação correta dos tipos de remetente e destinatário
-        if ((remetente instanceof Professor || remetente instanceof Aluno) &&
-            (destinatario instanceof Aluno || destinatario instanceof Empresa)) {
+        if ((remetente instanceof Professor && destinatario instanceof Aluno)) {
 
-            int saldoRemetente;
-
-            // Obtém o saldo do remetente com o tipo correto
-            if (remetente instanceof Professor) {
-                saldoRemetente = ((Professor) remetente).getSaldoMoedas();
-            } else if (remetente instanceof Aluno) {
-                saldoRemetente = ((Aluno) remetente).getSaldoMoedas();
-            } else {
-                throw new RuntimeException("Tipo de remetente inválido");
-            }
+            int saldoRemetente = ((Professor) remetente).getSaldoMoedas();
 
             // Define os dados da transação antes de persistir
             transacao.setRemetente(remetente);
@@ -70,21 +61,13 @@ public class TransacaoService {
 
             // Verifica se o saldo é suficiente para a transação
             if (saldoRemetente >= valor) {
-                // Atualiza o saldo do remetente
-                if (remetente instanceof Professor) {
-                    ((Professor) remetente).setSaldoMoedas(saldoRemetente - valor);
-                    professorService.salvarProfessor((Professor) remetente);
-                } else if (remetente instanceof Aluno) {
-                    ((Aluno) remetente).setSaldoMoedas(saldoRemetente - valor);
-                    alunoService.salvarAluno((Aluno) remetente);
-                }
+                ((Professor) remetente).setSaldoMoedas(saldoRemetente - valor);
+                professorService.salvarProfessor((Professor) remetente);
 
                 // Atualiza o saldo do destinatário se for Aluno (Empresa não tem saldo)
-                if (destinatario instanceof Aluno) {
-                    ((Aluno) destinatario).setSaldoMoedas(((Aluno) destinatario).getSaldoMoedas() + valor);
-                    ((Aluno) destinatario).setTotalMoedasRecebidas(((Aluno) destinatario).getTotalMoedasRecebidas() + valor);
-                    alunoService.salvarAluno((Aluno) destinatario); // Corrigido para salvar o destinatário
-                }
+                ((Aluno) destinatario).setSaldoMoedas(((Aluno) destinatario).getSaldoMoedas() + valor);
+                ((Aluno) destinatario).setTotalMoedasRecebidas(((Aluno) destinatario).getTotalMoedasRecebidas() + valor);
+                alunoService.salvarAluno((Aluno) destinatario); // Corrigido para salvar o destinatário
 
             } else {
                 throw new RuntimeException("Saldo insuficiente");

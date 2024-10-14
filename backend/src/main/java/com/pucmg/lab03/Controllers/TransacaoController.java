@@ -32,8 +32,8 @@ public class TransacaoController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @Operation(description = "Transfere moedas de um usuário para outro")
-    @PostMapping("/transferencia")
+    @Operation(description = "Transfere moedas de um professor para aluno")
+    @PostMapping("professor/transferencia")
     public ResponseEntity<String> transferirMoedas(@RequestBody TransferenciaRequestDTO transacaoRequest) {
 
         // Busca os usuários pelo ID
@@ -43,7 +43,7 @@ public class TransacaoController {
                 .orElseThrow(() -> new RuntimeException("Destinatário não encontrado"));
 
         try {
-            transacaoService.transferirMoedas(remetente, destinatario, transacaoRequest.getValor(), transacaoRequest.getMotivo());
+            transacaoService.professorTransferirMoedas(remetente, destinatario, transacaoRequest.getValor(), transacaoRequest.getMotivo());
             return ResponseEntity.ok("Transferência realizada com sucesso!");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
