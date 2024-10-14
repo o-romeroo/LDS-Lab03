@@ -12,6 +12,8 @@ import com.pucmg.lab03.Models.Aluno;
 import com.pucmg.lab03.Services.AlunoService;
 import com.pucmg.lab03.dto.RankingResponseDTO;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/ranking")
 public class RankingController {
@@ -19,6 +21,7 @@ public class RankingController {
     @Autowired
     AlunoService alunoService;
 
+    @Operation(description = "Retorna uma lista do ranking dos alunos, contendo a sua posição no ranking, nome, curso e total de moedas recebidas (Tela Melhores Alunos)")
     @GetMapping("/all")
     public ResponseEntity<List<RankingResponseDTO>> obterRanking() {
         List<Aluno> alunosOrdenados = alunoService.melhoresAlunos();

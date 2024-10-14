@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 
 import com.pucmg.lab03.dto.AlunoResponseDTO;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 import com.pucmg.lab03.Services.AlunoService;
 
 @RestController
@@ -20,6 +22,7 @@ public class AlunoController {
     @Autowired
     private AlunoService alunoService;
 
+    @Operation(description = "Retorna uma lista com todos os alunos cadastrados (Tela home de Professor)")
     @GetMapping("/all")
     public ResponseEntity<List<AlunoResponseDTO>> buscarTodosAlunos() {
         List<AlunoResponseDTO> alunosDto = alunoService.buscarTodosAlunos().stream()

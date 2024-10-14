@@ -15,6 +15,9 @@ import com.pucmg.lab03.Repositories.UsuarioRepository;
 import com.pucmg.lab03.Services.TransacaoService;
 import com.pucmg.lab03.dto.ExtratoProfessorResponseDTO;
 import com.pucmg.lab03.dto.TransferenciaRequestDTO;
+
+import io.swagger.v3.oas.annotations.Operation;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -29,7 +32,7 @@ public class TransacaoController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-
+    @Operation(description = "Transfere moedas de um usuário para outro")
     @PostMapping("/transferencia")
     public ResponseEntity<String> transferirMoedas(@RequestBody TransferenciaRequestDTO transacaoRequest) {
 
@@ -47,6 +50,7 @@ public class TransacaoController {
         }
     }
 
+    @Operation(description = "Retorna uma lista com todas as transações enviadas por um professor, {usuarioId} neste caso é o ID do professor")
     @GetMapping("professor/enviadas/{usuarioId}")
     public ResponseEntity<List<ExtratoProfessorResponseDTO>> buscarTransacoesEnviadas(@PathVariable Long usuarioId) {
         List<ExtratoProfessorResponseDTO> transacoesEnviadasDto = transacaoService.buscarTransacoesEnviadas(usuarioId).stream()
