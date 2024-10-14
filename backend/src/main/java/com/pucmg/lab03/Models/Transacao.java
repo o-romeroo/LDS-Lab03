@@ -37,7 +37,7 @@ public class Transacao {
     private Usuario destinatario;
 
     @Column
-    private String motivo;
+    private String detalhes;
 
     @Column
     private int montante;

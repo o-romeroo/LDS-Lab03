@@ -34,7 +34,7 @@ public class TransacaoService {
     private VantagemService vantagemService;
 
     @Transactional
-    public void professorTransferirMoedas(Usuario remetente, Usuario destinatario, int valor, String motivo) {
+    public void professorTransferirMoedas(Usuario remetente, Usuario destinatario, int valor, String detalhes) {
         Transacao transacao = new Transacao();
 
         remetente = usuarioRepository.findById(remetente.getId())
@@ -59,7 +59,7 @@ public class TransacaoService {
             transacao.setRemetente(remetente);
             transacao.setDestinatario(destinatario);
             transacao.setMontante(valor);
-            transacao.setMotivo(motivo);
+            transacao.setDetalhes(detalhes);
             transacao.setData(LocalDate.now());
             salvarTransacao(transacao);
 
@@ -84,11 +84,20 @@ public class TransacaoService {
 
         Aluno aluno = alunoService.buscarAluno(alunoId);
         Vantagem vantagem = vantagemService.buscarVantagem(vantagemId);
+        Transacao transacao = new Transacao();
 
         if (aluno.getSaldoMoedas() >= vantagem.getPreco()) {
             aluno.setSaldoMoedas(aluno.getSaldoMoedas() - vantagem.getPreco());
             alunoService.salvarAluno(aluno);
-        } else {
+            transacao.setMontante(vantagem.getPreco());
+            transacao.setDetalhes(vantagem.getDetalhes());
+            transacao.setData(LocalDate.now());
+            transacao.setDestinatario(vantagem.getEmpresa());
+            transacao.setRemetente(aluno);
+            salvarTransacao(transacao);
+        } 
+        
+        else {
             throw new RuntimeException("Saldo insuficiente");
         }
         // falta criar e chamar o método do cupom ir para o email do aluno

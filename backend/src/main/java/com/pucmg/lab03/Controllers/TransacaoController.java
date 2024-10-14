@@ -16,6 +16,7 @@ import com.pucmg.lab03.Services.TransacaoService;
 import com.pucmg.lab03.dto.ExtratoProfessorResponseDTO;
 import com.pucmg.lab03.dto.TransferenciaRequestDTO;
 import com.pucmg.lab03.dto.ComprarVantagemRequestDTO;
+import com.pucmg.lab03.dto.ExtratoAlunoResponseDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -56,19 +57,50 @@ public class TransacaoController {
 
     @Operation(description = "Retorna uma lista com todas as transações enviadas por um professor, {usuarioId} neste caso é o ID do professor")
     @GetMapping("professor/enviadas/{usuarioId}")
-    public ResponseEntity<List<ExtratoProfessorResponseDTO>> buscarTransacoesEnviadas(@PathVariable Long usuarioId) {
+    public ResponseEntity<List<ExtratoProfessorResponseDTO>> buscarTransacoesEnviadasProfessor(@PathVariable Long usuarioId) {
         List<ExtratoProfessorResponseDTO> transacoesEnviadasDto = transacaoService.buscarTransacoesEnviadas(usuarioId)
                 .stream()
                 .map(extrato -> new ExtratoProfessorResponseDTO(
-                        extrato.getId(),
                         extrato.getMontante(),
                         extrato.getDestinatario().getNome(),
-                        extrato.getMotivo(),
+                        extrato.getDetalhes(),
                         extrato.getData()))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(transacoesEnviadasDto);
     }
+
+    @Operation(description = "Retorna uma lista com todas as transações <b>recebidas</b> por um aluno (quando ele recebe moedas de um professor).<br>{usuarioId} neste caso é o ID do <b>aluno</b><br> este método faz parte da página Extrato do Aluno")
+    @GetMapping("aluno/recebidas/{usuarioId}")
+    public ResponseEntity<List<ExtratoAlunoResponseDTO>> buscarTransacoesRecebidasAluno(@PathVariable Long usuarioId) {
+        List<ExtratoAlunoResponseDTO> transacoesRecebidasDto = transacaoService.buscarTransacoesRecebidas(usuarioId)
+                .stream()
+                .map(extrato -> new ExtratoAlunoResponseDTO(
+                        extrato.getMontante(),
+                        extrato.getDestinatario().getNome(),
+                        extrato.getDetalhes(),
+                        extrato.getData()))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(transacoesRecebidasDto);
+    }
+
+    @Operation(description = "Retorna uma lista com todas as transações <b>enviadas</b> por um aluno (quando ele compra uma vantagem).<br>{usuarioId} neste caso é o ID do <b>aluno</b><br> este método faz parte da página Extrato do Aluno")
+    @GetMapping("aluno/enviadas/{usuarioId}")
+    public ResponseEntity<List<ExtratoAlunoResponseDTO>> buscarTransacoesEnviadasAluno(@PathVariable Long usuarioId) {
+        List<ExtratoAlunoResponseDTO> transacoesRecebidasDto = transacaoService.buscarTransacoesRecebidas(usuarioId)
+                .stream()
+                .map(extrato -> new ExtratoAlunoResponseDTO(
+                        extrato.getMontante(),
+                        extrato.getRemetente().getNome(),
+                        extrato.getDetalhes(),
+                        extrato.getData()))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(transacoesRecebidasDto);
+    }
+
+
 
     @Operation(description = "Debita moedas de um aluno para comprar uma vantagem.")
     @PostMapping("aluno/compra")

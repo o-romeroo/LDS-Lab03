@@ -1,4 +1,5 @@
 package com.pucmg.lab03.dto;
+
 import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
@@ -8,13 +9,15 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class ExtratoProfessorResponseDTO{
+@AllArgsConstructor
+public class ExtratoAlunoResponseDTO {
     
     private int montante;
-    private String destinatario;
-    private String motivo;
+    private String parteEnvolvida;
+    private String detalhes;
     private LocalDate data;
+
+
 
 }

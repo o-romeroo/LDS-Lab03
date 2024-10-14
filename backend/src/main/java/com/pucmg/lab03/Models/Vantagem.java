@@ -29,7 +29,7 @@ public class Vantagem {
     private Long id;
 
     @Column
-    private String descricao;
+    private String detalhes;
 
     @Column
     private int preco;
