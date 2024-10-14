@@ -1,6 +1,5 @@
 package com.pucmg.lab03.Models;
 
-import java.io.File;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -75,10 +75,10 @@ public class AlunoController {
     }
 
     // ja cria um aluno com foto
-    @PostMapping("/criar")
+    @PostMapping(value = "/cadastrar", consumes = "multipart/form-data")
     public ResponseEntity<String> criarAluno(@ModelAttribute AlunoRequestDTO alunoDto) {
         try {
-            alunoService.salvarAluno(alunoDto);
+            alunoService.criarAluno(alunoDto);
             return ResponseEntity.status(HttpStatus.CREATED).body("Aluno criado com sucesso!");
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao salvar aluno.");
