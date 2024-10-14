@@ -10,23 +10,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pucmg.lab03.Services.ProfessorService;
-import com.pucmg.lab03.dto.ProfessorRequestDTO;
+import com.pucmg.lab03.Services.EmpresaService;
+import com.pucmg.lab03.dto.EmpresaRequestDTO;
 
 @RestController
-@RequestMapping("/professor")
-public class ProfessorController {
+@RequestMapping("/empresa")
+public class EmpresaController {
 
     @Autowired
-    ProfessorService professorService;
+    private EmpresaService empresaService;
+
     
     @PostMapping(value = "/cadastrar", consumes = "multipart/form-data")
-    public ResponseEntity<String> cadastrarProfessor(@ModelAttribute ProfessorRequestDTO professorRequestDTO) {
+    public ResponseEntity<String> cadastrarEmpresa(@ModelAttribute EmpresaRequestDTO empresaDto) {
         try {
-            professorService.criarProfessor(professorRequestDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Professor criado com sucesso!");
+            empresaService.criarEmpresa(empresaDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Empresa criada com sucesso!");
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao salvar professor.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao salvar empresa.");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
