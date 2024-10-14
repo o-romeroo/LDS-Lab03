@@ -19,7 +19,6 @@ import com.pucmg.lab03.dto.ComprarVantagemRequestDTO;
 import com.pucmg.lab03.dto.ExtratoAlunoResponseDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -57,7 +56,8 @@ public class TransacaoController {
 
     @Operation(description = "Retorna uma lista com todas as transações enviadas por um professor, {usuarioId} neste caso é o ID do professor")
     @GetMapping("professor/enviadas/{usuarioId}")
-    public ResponseEntity<List<ExtratoProfessorResponseDTO>> buscarTransacoesEnviadasProfessor(@PathVariable Long usuarioId) {
+    public ResponseEntity<List<ExtratoProfessorResponseDTO>> buscarTransacoesEnviadasProfessor(
+            @PathVariable Long usuarioId) {
         List<ExtratoProfessorResponseDTO> transacoesEnviadasDto = transacaoService.buscarTransacoesEnviadas(usuarioId)
                 .stream()
                 .map(extrato -> new ExtratoProfessorResponseDTO(
@@ -99,8 +99,6 @@ public class TransacaoController {
 
         return ResponseEntity.ok(transacoesRecebidasDto);
     }
-
-
 
     @Operation(description = "Debita moedas de um aluno para comprar uma vantagem.")
     @PostMapping("aluno/compra")

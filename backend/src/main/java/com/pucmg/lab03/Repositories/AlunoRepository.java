@@ -11,4 +11,5 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 
     List<Aluno> findAllByOrderByTotalMoedasRecebidasDesc();
 
+    Aluno findByEmail(String email);
 }

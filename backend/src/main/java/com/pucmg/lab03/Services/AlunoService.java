@@ -29,5 +29,9 @@ public class AlunoService {
         return alunoRepository.findAllByOrderByTotalMoedasRecebidasDesc();
 
     }
+
+    public Aluno buscarAlunoPorEmail(String email) {
+        return alunoRepository.findByEmail(email);
+    }
     
 }

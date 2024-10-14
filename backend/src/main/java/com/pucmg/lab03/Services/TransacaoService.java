@@ -13,6 +13,7 @@ import com.pucmg.lab03.Repositories.TransacaoRepository;
 import com.pucmg.lab03.Repositories.UsuarioRepository;
 import java.util.List;
 
+import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -32,6 +33,9 @@ public class TransacaoService {
 
     @Autowired
     private VantagemService vantagemService;
+
+    @Autowired
+    private EmailService emailService;
 
     @Transactional
     public void professorTransferirMoedas(Usuario remetente, Usuario destinatario, int valor, String detalhes) {
@@ -55,14 +59,6 @@ public class TransacaoService {
 
             int saldoRemetente = ((Professor) remetente).getSaldoMoedas();
 
-            // Define os dados da transação antes de persistir
-            transacao.setRemetente(remetente);
-            transacao.setDestinatario(destinatario);
-            transacao.setMontante(valor);
-            transacao.setDetalhes(detalhes);
-            transacao.setData(LocalDate.now());
-            salvarTransacao(transacao);
-
             // Verifica se o saldo é suficiente para a transação
             if (saldoRemetente >= valor) {
                 ((Professor) remetente).setSaldoMoedas(saldoRemetente - valor);
@@ -70,7 +66,20 @@ public class TransacaoService {
 
                 ((Aluno) destinatario).setSaldoMoedas(((Aluno) destinatario).getSaldoMoedas() + valor);
                 ((Aluno) destinatario).setTotalMoedasRecebidas(((Aluno) destinatario).getTotalMoedasRecebidas() + valor);
-                alunoService.salvarAluno((Aluno) destinatario); 
+                alunoService.salvarAluno((Aluno) destinatario);
+                // salva o historico da transacao
+                transacao.setRemetente(remetente);
+                transacao.setDestinatario(destinatario);
+                transacao.setMontante(valor);
+                transacao.setDetalhes(detalhes);
+                transacao.setData(LocalDate.now());
+                salvarTransacao(transacao); 
+                // envia email de notificacao para o aluno
+                try {
+                    emailService.enviarNotificacaoRecebimentoMoedas(((Aluno) destinatario).getEmail(), valor);
+                } catch (MessagingException e) {
+                    throw new RuntimeException("Falha ao enviar notificação por email", e);
+                }
             } else {
                 throw new RuntimeException("Saldo insuficiente");
             }
