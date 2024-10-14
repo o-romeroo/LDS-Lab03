@@ -1,6 +1,6 @@
 package com.pucmg.lab03.Models;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,7 +43,7 @@ public class Transacao {
     private int montante;
 
     @Column
-    private LocalDateTime data;
+    private LocalDate data;
 
 
 }

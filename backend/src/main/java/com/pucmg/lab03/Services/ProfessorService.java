@@ -19,6 +19,6 @@ public class ProfessorService {
     public Professor salvarProfessor(Professor professor) {
         return professorRepository.save(professor);
     }
-    
+
 
 }

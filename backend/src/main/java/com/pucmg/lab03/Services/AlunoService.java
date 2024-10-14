@@ -24,5 +24,10 @@ public class AlunoService {
     public List<Aluno> buscarTodosAlunos() {
         return alunoRepository.findAll();
     }
+
+    public List<Aluno> melhoresAlunos(){
+        return alunoRepository.findAllByOrderByTotalMoedasRecebidasDesc();
+
+    }
     
 }

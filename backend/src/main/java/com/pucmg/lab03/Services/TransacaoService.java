@@ -1,8 +1,7 @@
 package com.pucmg.lab03.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 
 import com.pucmg.lab03.Models.Aluno;
@@ -12,6 +11,7 @@ import com.pucmg.lab03.Models.Transacao;
 import com.pucmg.lab03.Models.Usuario;
 import com.pucmg.lab03.Repositories.TransacaoRepository;
 import com.pucmg.lab03.Repositories.UsuarioRepository;
+import java.util.List;
 
 import jakarta.transaction.Transactional;
 
@@ -65,7 +65,7 @@ public class TransacaoService {
             transacao.setDestinatario(destinatario);
             transacao.setMontante(valor);
             transacao.setMotivo(motivo);
-            transacao.setData(LocalDateTime.now());
+            transacao.setData(LocalDate.now());
             salvarTransacao(transacao);
 
             // Verifica se o saldo é suficiente para a transação
@@ -92,6 +92,14 @@ public class TransacaoService {
         } else {
             throw new RuntimeException("Tipos de remetente ou destinatário inválidos para a transação");
         }
+    }
+
+    public List<Transacao> buscarTransacoesEnviadas(Long remetenteId) {
+        return transacaoRepository.findByRemetenteId(remetenteId);
+    }
+
+    public List<Transacao> buscarTransacoesRecebidas(Long destinatarioId) {
+        return transacaoRepository.findByDestinatarioId(destinatarioId);
     }
 
     @Transactional

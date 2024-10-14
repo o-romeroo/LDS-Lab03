@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AlunoRequestDTO {
+public class AlunoResponseDTO {
 
     private Long id;
     private String nome;

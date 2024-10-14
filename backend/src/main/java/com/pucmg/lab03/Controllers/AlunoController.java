@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.http.ResponseEntity;
 
-import com.pucmg.lab03.dto.AlunoRequestDTO;
+import com.pucmg.lab03.dto.AlunoResponseDTO;
 
 import com.pucmg.lab03.Services.AlunoService;
 
@@ -21,11 +21,10 @@ public class AlunoController {
     private AlunoService alunoService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<AlunoRequestDTO>> buscarTodosAlunos() {
-        List<AlunoRequestDTO> alunosDto = alunoService.buscarTodosAlunos().stream()
-            .map(aluno -> new AlunoRequestDTO(aluno.getId(), aluno.getNome(), aluno.getCurso()))
+    public ResponseEntity<List<AlunoResponseDTO>> buscarTodosAlunos() {
+        List<AlunoResponseDTO> alunosDto = alunoService.buscarTodosAlunos().stream()
+            .map(aluno -> new AlunoResponseDTO(aluno.getId(), aluno.getNome(), aluno.getCurso()))
             .collect(Collectors.toList());
-
         return ResponseEntity.ok(alunosDto);
     }
 }

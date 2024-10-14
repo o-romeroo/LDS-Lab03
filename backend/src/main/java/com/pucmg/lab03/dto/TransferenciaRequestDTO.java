@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransacaoRequestDTO {
+public class TransferenciaRequestDTO {
 
     private Long remetenteId;
     private Long destinatarioId;

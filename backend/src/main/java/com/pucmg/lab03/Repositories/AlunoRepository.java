@@ -9,4 +9,6 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
     
     public List<Aluno> findAll();
 
+    List<Aluno> findAllByOrderByTotalMoedasRecebidasDesc();
+
 }
