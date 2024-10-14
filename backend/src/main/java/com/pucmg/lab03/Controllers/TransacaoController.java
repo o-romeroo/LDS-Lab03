@@ -54,6 +54,7 @@ public class TransacaoController {
         }
     }
 
+    // ja ta retornando imagem
     @Operation(description = "Retorna uma lista com todas as transações enviadas por um professor, {usuarioId} neste caso é o ID do professor")
     @GetMapping("professor/enviadas/{usuarioId}")
     public ResponseEntity<List<ExtratoProfessorResponseDTO>> buscarTransacoesEnviadasProfessor(
@@ -72,6 +73,7 @@ public class TransacaoController {
         return ResponseEntity.ok(transacoesEnviadasDto);
     }
 
+    // precisa retornar a imagem
     @Operation(description = "Retorna uma lista com todas as transações <b>recebidas</b> por um aluno (quando ele recebe moedas de um professor).<br>{usuarioId} neste caso é o ID do <b>aluno</b><br> este método faz parte da página Extrato do Aluno")
     @GetMapping("aluno/recebidas/{usuarioId}")
     public ResponseEntity<List<ExtratoAlunoResponseDTO>> buscarTransacoesRecebidasAluno(@PathVariable Long usuarioId) {

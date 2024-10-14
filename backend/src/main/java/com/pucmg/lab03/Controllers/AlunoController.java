@@ -74,6 +74,7 @@ public class AlunoController {
         return ResponseEntity.ok(alunosDto);
     }
 
+    // ja cria um aluno com foto
     @PostMapping("/criar")
     public ResponseEntity<String> criarAluno(@ModelAttribute AlunoRequestDTO alunoDto) {
         try {
