@@ -1,5 +1,6 @@
 package com.pucmg.lab03.Models;
 
+import java.io.File;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -41,6 +43,10 @@ public class Usuario {
 
     @Column
     private String senha;
+
+    @Column(columnDefinition = "LONGBLOB")
+    @Lob
+    private byte[] fotoPerfil;
 
     // Lista de transações em que o usuário é o remetente
     @OneToMany(mappedBy = "remetente", cascade = CascadeType.ALL, orphanRemoval = true)

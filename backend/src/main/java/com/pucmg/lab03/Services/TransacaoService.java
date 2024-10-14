@@ -101,7 +101,12 @@ public class TransacaoService {
             transacao.setMontante(vantagem.getPreco());
             transacao.setDetalhes(vantagem.getDetalhes());
             transacao.setData(LocalDate.now());
-            transacao.setDestinatario(vantagem.getEmpresa());
+            if (vantagem.getEmpresa() == null) {
+                transacao.setDestinatario(vantagem.getInstituicaoEnsino());;
+            }
+            else {
+                transacao.setDestinatario(vantagem.getEmpresa());
+            }
             transacao.setRemetente(aluno);
             salvarTransacao(transacao);
         } 

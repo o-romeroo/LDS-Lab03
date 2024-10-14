@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -35,7 +36,8 @@ public class Vantagem {
     private int preco;
 
     @Column
-    private File imagem;
+    @Lob
+    private byte[] imagem;
 
     @ManyToOne
     @JoinColumn(name = "empresa_id", nullable = true)

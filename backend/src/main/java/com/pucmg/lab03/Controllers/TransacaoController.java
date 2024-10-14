@@ -61,6 +61,8 @@ public class TransacaoController {
         List<ExtratoProfessorResponseDTO> transacoesEnviadasDto = transacaoService.buscarTransacoesEnviadas(usuarioId)
                 .stream()
                 .map(extrato -> new ExtratoProfessorResponseDTO(
+                        extrato.getFotoRemetente(),
+                        extrato.getFotoDestinatario(),
                         extrato.getMontante(),
                         extrato.getDestinatario().getNome(),
                         extrato.getDetalhes(),
