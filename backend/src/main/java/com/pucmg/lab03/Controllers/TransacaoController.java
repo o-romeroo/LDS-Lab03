@@ -15,6 +15,7 @@ import com.pucmg.lab03.Repositories.UsuarioRepository;
 import com.pucmg.lab03.Services.TransacaoService;
 import com.pucmg.lab03.dto.ExtratoProfessorResponseDTO;
 import com.pucmg.lab03.dto.TransferenciaRequestDTO;
+import com.pucmg.lab03.dto.ComprarVantagemRequestDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 @RequestMapping("/transacao")
 public class TransacaoController {
-    
 
     @Autowired
     private TransacaoService transacaoService;
@@ -32,9 +32,10 @@ public class TransacaoController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @Operation(description = "Transfere moedas de um professor para aluno.<br><br><b>remetenteId</b> é o <b>ID</b> do professor que está transferindo as moedas.<br>"+
-    "<b>destinatarioId</b> é o <b>ID</b> do aluno que está recebendo as moedas.<br><b>valor</b> é a quantidade de moedas a ser transferida.<br><b>motivo</b>"
-    +"é a justificativa da transferência.")
+    @Operation(description = "Transfere moedas de um professor para aluno.<br><br><b>remetenteId</b> é o <b>ID</b> do professor que está transferindo as moedas.<br>"
+            +
+            "<b>destinatarioId</b> é o <b>ID</b> do aluno que está recebendo as moedas.<br><b>valor</b> é a quantidade de moedas a ser transferida.<br><b>motivo</b>"
+            + "é a justificativa da transferência.")
     @PostMapping("professor/transferencia")
     public ResponseEntity<String> transferirMoedas(@RequestBody TransferenciaRequestDTO transacaoRequest) {
 
@@ -45,7 +46,8 @@ public class TransacaoController {
                 .orElseThrow(() -> new RuntimeException("Destinatário não encontrado"));
 
         try {
-            transacaoService.professorTransferirMoedas(remetente, destinatario, transacaoRequest.getValor(), transacaoRequest.getMotivo());
+            transacaoService.professorTransferirMoedas(remetente, destinatario, transacaoRequest.getValor(),
+                    transacaoRequest.getMotivo());
             return ResponseEntity.ok("Transferência realizada com sucesso!");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -55,19 +57,28 @@ public class TransacaoController {
     @Operation(description = "Retorna uma lista com todas as transações enviadas por um professor, {usuarioId} neste caso é o ID do professor")
     @GetMapping("professor/enviadas/{usuarioId}")
     public ResponseEntity<List<ExtratoProfessorResponseDTO>> buscarTransacoesEnviadas(@PathVariable Long usuarioId) {
-        List<ExtratoProfessorResponseDTO> transacoesEnviadasDto = transacaoService.buscarTransacoesEnviadas(usuarioId).stream()
-            .map(extrato -> new ExtratoProfessorResponseDTO(
-                extrato.getId(),
-                extrato.getMontante(),
-                extrato.getDestinatario().getNome(),
-                extrato.getMotivo(),
-                extrato.getData()
-            ))
-            .collect(Collectors.toList());
-    
+        List<ExtratoProfessorResponseDTO> transacoesEnviadasDto = transacaoService.buscarTransacoesEnviadas(usuarioId)
+                .stream()
+                .map(extrato -> new ExtratoProfessorResponseDTO(
+                        extrato.getId(),
+                        extrato.getMontante(),
+                        extrato.getDestinatario().getNome(),
+                        extrato.getMotivo(),
+                        extrato.getData()))
+                .collect(Collectors.toList());
+
         return ResponseEntity.ok(transacoesEnviadasDto);
     }
-    
 
+    @Operation(description = "Debita moedas de um aluno para comprar uma vantagem.")
+    @PostMapping("aluno/compra")
+    public ResponseEntity<String> comprarVantagem(@RequestBody ComprarVantagemRequestDTO request) {
+        try {
+            transacaoService.alunoComprarVantagem(request.getAlunoId(), request.getVantagemId());
+            return ResponseEntity.ok("Vantagem comprada com sucesso!");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 
 }

@@ -8,6 +8,7 @@ import com.pucmg.lab03.Models.Aluno;
 import com.pucmg.lab03.Models.Professor;
 import com.pucmg.lab03.Models.Transacao;
 import com.pucmg.lab03.Models.Usuario;
+import com.pucmg.lab03.Models.Vantagem;
 import com.pucmg.lab03.Repositories.TransacaoRepository;
 import com.pucmg.lab03.Repositories.UsuarioRepository;
 import java.util.List;
@@ -28,6 +29,9 @@ public class TransacaoService {
 
     @Autowired
     private AlunoService alunoService;
+
+    @Autowired
+    private VantagemService vantagemService;
 
     @Transactional
     public void professorTransferirMoedas(Usuario remetente, Usuario destinatario, int valor, String motivo) {
@@ -64,17 +68,30 @@ public class TransacaoService {
                 ((Professor) remetente).setSaldoMoedas(saldoRemetente - valor);
                 professorService.salvarProfessor((Professor) remetente);
 
-                // Atualiza o saldo do destinatário se for Aluno (Empresa não tem saldo)
                 ((Aluno) destinatario).setSaldoMoedas(((Aluno) destinatario).getSaldoMoedas() + valor);
                 ((Aluno) destinatario).setTotalMoedasRecebidas(((Aluno) destinatario).getTotalMoedasRecebidas() + valor);
-                alunoService.salvarAluno((Aluno) destinatario); // Corrigido para salvar o destinatário
-
+                alunoService.salvarAluno((Aluno) destinatario); 
             } else {
                 throw new RuntimeException("Saldo insuficiente");
             }
         } else {
             throw new RuntimeException("Tipos de remetente ou destinatário inválidos para a transação");
         }
+    }
+
+    @Transactional
+    public void alunoComprarVantagem(Long alunoId, Long vantagemId) {
+
+        Aluno aluno = alunoService.buscarAluno(alunoId);
+        Vantagem vantagem = vantagemService.buscarVantagem(vantagemId);
+
+        if (aluno.getSaldoMoedas() >= vantagem.getPreco()) {
+            aluno.setSaldoMoedas(aluno.getSaldoMoedas() - vantagem.getPreco());
+            alunoService.salvarAluno(aluno);
+        } else {
+            throw new RuntimeException("Saldo insuficiente");
+        }
+        // falta criar e chamar o método do cupom ir para o email do aluno
     }
 
     public List<Transacao> buscarTransacoesEnviadas(Long remetenteId) {

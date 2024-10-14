@@ -29,13 +29,10 @@ public class Vantagem {
     private Long id;
 
     @Column
-    private String nome;
-
-    @Column
     private String descricao;
 
     @Column
-    private int custo;
+    private int preco;
 
     @Column
     private File imagem;
