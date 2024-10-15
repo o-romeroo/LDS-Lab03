@@ -71,7 +71,7 @@ public class AlunoService {
     }
 
     public byte[] buscarImgInstituicaoPorAluno(Aluno aluno) {
-        InstituicaoEnsino instituicao = instituicaoEnsinoRepository.findByAluno(aluno.getId());
+        InstituicaoEnsino instituicao = aluno.getInstituicaoEnsino();
         return instituicao.getFotoPerfil();
     }
 }
