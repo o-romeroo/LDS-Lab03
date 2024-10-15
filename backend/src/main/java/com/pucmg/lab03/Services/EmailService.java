@@ -6,6 +6,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+
 import com.pucmg.lab03.Models.Aluno;
 
 import jakarta.mail.MessagingException;
@@ -31,13 +32,16 @@ public class EmailService {
 // }
 
 
-    public void enviarNotificacaoRecebimentoMoedas(String para, int quantidadeMoedas) throws MessagingException {
+    public void enviarNotificacaoRecebimentoMoedas(String para, int quantidadeMoedas, String detalhes) throws MessagingException {
         Aluno aluno = alunoService.buscarAlunoPorEmail(para);
         String assunto = "Recebimento de Aracoins!";
         String mensagemHtml = "<html><body>" +
-                "<h3>Olá, " + aluno.getNome() + "!</h3>" +
+                "<img src='data:image/png;base64," + java.util.Base64.getEncoder().encodeToString(alunoService.buscarImgInstituicaoPorAluno(aluno)) + "'>" +  // Imagem da instituição
+                "<div style='text-align: center;'>" +
+                "<h2>Olá, " + aluno.getNome() + "!</h2>" +
                 "<p>Você recebeu <b>" + quantidadeMoedas + " Aracoins!</b></p>" +
-                "<img src='cid:aracoin'>" +  // Referência à imagem embutida
+                "<p>Detalhes: " + detalhes + "</p> </div>" +
+                "<img src='cid:aracoin'> " +  // Referência à imagem embutida 
                 "</body></html>";
 
         // Cria uma mensagem MIME

@@ -76,7 +76,7 @@ public class TransacaoService {
                 salvarTransacao(transacao); 
                 // envia email de notificacao para o aluno
                 try {
-                    emailService.enviarNotificacaoRecebimentoMoedas(((Aluno) destinatario).getEmail(), valor);
+                    emailService.enviarNotificacaoRecebimentoMoedas(((Aluno) destinatario).getEmail(), valor, detalhes);
                 } catch (MessagingException e) {
                     throw new RuntimeException("Falha ao enviar notificação por email", e);
                 }

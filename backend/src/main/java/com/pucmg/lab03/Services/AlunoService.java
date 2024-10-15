@@ -9,6 +9,9 @@ import com.pucmg.lab03.Repositories.AlunoRepository;
 import com.pucmg.lab03.Repositories.InstituicaoEnsinoRepository;
 import com.pucmg.lab03.dto.AlunoRequestDTO;
 
+
+import jakarta.transaction.Transactional;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -17,6 +20,9 @@ public class AlunoService {
 
     @Autowired
     AlunoRepository alunoRepository;
+
+    @Autowired
+    InstituicaoEnsinoRepository InstituicaoEnsinoRepository;
 
     public Aluno salvarAluno(Aluno aluno) {
         return alunoRepository.save(aluno);
@@ -42,7 +48,8 @@ public class AlunoService {
     @Autowired
     private InstituicaoEnsinoRepository instituicaoEnsinoRepository;
 
-    public Aluno salvarAluno(AlunoRequestDTO alunoDto) throws IOException {
+    @Transactional
+    public Aluno criarAluno(AlunoRequestDTO alunoDto) throws IOException {
         Aluno aluno = new Aluno();
         aluno.setNome(alunoDto.getNome());
         aluno.setLogin(alunoDto.getLogin());
@@ -62,5 +69,9 @@ public class AlunoService {
 
         return salvarAluno(aluno);
     }
-    
+
+    public byte[] buscarImgInstituicaoPorAluno(Aluno aluno) {
+        InstituicaoEnsino instituicao = instituicaoEnsinoRepository.findByAluno(aluno.getId());
+        return instituicao.getFotoPerfil();
+    }
 }
