@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,8 @@ public class InstituicaoEnsinoController {
 
     @Autowired
     private InstituicaoEnsinoService instituicaoEnsinoService;
-
+    
+    @PostMapping(value = "/cadastrar", consumes = "multipart/form-data")
     public ResponseEntity<String>cadastrarInstituicaoEnsino(@ModelAttribute InstituicaoEnsinoRequestDTO instituicaoEnsinoDto) {
         try {
             instituicaoEnsinoService.criarInstituicaoEnsino(instituicaoEnsinoDto);
