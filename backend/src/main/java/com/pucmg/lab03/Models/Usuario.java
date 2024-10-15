@@ -43,7 +43,7 @@ public class Usuario {
     @Column
     private String senha;
 
-    @Column(columnDefinition = "LONGBLOB")
+    @Column(columnDefinition = "BYTEA")
     @Lob
     private byte[] fotoPerfil;
 

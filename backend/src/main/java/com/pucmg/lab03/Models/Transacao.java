@@ -45,11 +45,19 @@ public class Transacao {
     @Column
     private LocalDate data;
 
-    @Column(columnDefinition = "LONGBLOB")
+
+    @Column(columnDefinition = "BYTEA")
     private byte[] fotoRemetente;
 
-    @Column(columnDefinition = "LONGBLOB")
+    @Column(columnDefinition = "BYTEA")
     private byte[] fotoDestinatario;
+
+    // @Column(columnDefinition = "LONGBLOB")
+    // private byte[] fotoRemetente;
+
+
+    // @Column(columnDefinition = "LONGBLOB")
+    // private byte[] fotoDestinatario;
 
 
 }
