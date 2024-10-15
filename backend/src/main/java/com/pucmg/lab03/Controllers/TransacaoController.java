@@ -80,25 +80,28 @@ public class TransacaoController {
         List<ExtratoAlunoResponseDTO> transacoesRecebidasDto = transacaoService.buscarTransacoesRecebidas(usuarioId)
                 .stream()
                 .map(extrato -> new ExtratoAlunoResponseDTO(
-                        extrato.getMontante(),
-                        extrato.getDestinatario().getNome(),
+                        extrato.getMontante(), 
+                        extrato.getRemetente().getNome(),
                         extrato.getDetalhes(),
-                        extrato.getData()))
+                        extrato.getData(),
+                        extrato.getRemetente().getFotoPerfil())) // pega a imagem do professor que enviou as moedas
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(transacoesRecebidasDto);
     }
 
+    // precisa retornar a imagem
     @Operation(description = "Retorna uma lista com todas as transações <b>enviadas</b> por um aluno (quando ele compra uma vantagem).<br>{usuarioId} neste caso é o ID do <b>aluno</b><br> este método faz parte da página Extrato do Aluno")
     @GetMapping("aluno/enviadas/{usuarioId}")
     public ResponseEntity<List<ExtratoAlunoResponseDTO>> buscarTransacoesEnviadasAluno(@PathVariable Long usuarioId) {
-        List<ExtratoAlunoResponseDTO> transacoesRecebidasDto = transacaoService.buscarTransacoesRecebidas(usuarioId)
+        List<ExtratoAlunoResponseDTO> transacoesRecebidasDto = transacaoService.buscarTransacoesEnviadas(usuarioId)
                 .stream()
                 .map(extrato -> new ExtratoAlunoResponseDTO(
                         extrato.getMontante(),
-                        extrato.getRemetente().getNome(),
+                        extrato.getDestinatario().getNome(),
                         extrato.getDetalhes(),
-                        extrato.getData()))
+                        extrato.getData(),
+                        extrato.getDestinatario().getFotoPerfil())) // pega a imagem da empresa/instuição que recebeu as moedas
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(transacoesRecebidasDto);
