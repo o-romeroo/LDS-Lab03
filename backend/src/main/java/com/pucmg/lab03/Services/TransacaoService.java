@@ -131,6 +131,10 @@ public class TransacaoService {
         return transacaoRepository.findByDestinatarioId(destinatarioId);
     }
 
+    public List<Transacao> buscarTodasTransacoes(Long usuarioId){
+        return transacaoRepository.findByUsuarioId(usuarioId);
+    }
+
     @Transactional
     public Transacao salvarTransacao(Transacao transacao) {
         return transacaoRepository.save(transacao);

@@ -74,7 +74,7 @@ public class TransacaoController {
     }
 
     // precisa retornar a imagem
-    @Operation(description = "Retorna uma lista com todas as transações <b>recebidas</b> por um aluno (quando ele recebe moedas de um professor).<br>{usuarioId} neste caso é o ID do <b>aluno</b><br> este método faz parte da página Extrato do Aluno")
+    @Operation(description = "Retorna uma lista com todas as transações <b>recebidas</b> por um aluno (quando ele recebe moedas de um professor).<br>{usuarioId} neste caso é o ID do <b>aluno</b>")
     @GetMapping("aluno/recebidas/{usuarioId}")
     public ResponseEntity<List<ExtratoAlunoResponseDTO>> buscarTransacoesRecebidasAluno(@PathVariable Long usuarioId) {
         List<ExtratoAlunoResponseDTO> transacoesRecebidasDto = transacaoService.buscarTransacoesRecebidas(usuarioId)
@@ -91,7 +91,7 @@ public class TransacaoController {
     }
 
     // precisa retornar a imagem
-    @Operation(description = "Retorna uma lista com todas as transações <b>enviadas</b> por um aluno (quando ele compra uma vantagem).<br>{usuarioId} neste caso é o ID do <b>aluno</b><br> este método faz parte da página Extrato do Aluno")
+    @Operation(description = "Retorna uma lista com todas as transações <b>enviadas</b> por um aluno (quando ele compra uma vantagem).<br>{usuarioId} neste caso é o ID do <b>aluno</b>")
     @GetMapping("aluno/enviadas/{usuarioId}")
     public ResponseEntity<List<ExtratoAlunoResponseDTO>> buscarTransacoesEnviadasAluno(@PathVariable Long usuarioId) {
         List<ExtratoAlunoResponseDTO> transacoesRecebidasDto = transacaoService.buscarTransacoesEnviadas(usuarioId)
@@ -106,6 +106,26 @@ public class TransacaoController {
 
         return ResponseEntity.ok(transacoesRecebidasDto);
     }
+
+    @Operation(description = "Retorna uma lista com todas as transações de um aluno.<br>{usuarioId} neste caso é o ID do <b>aluno</b><br> este método faz parte da página Extrato do Aluno")
+    @GetMapping("aluno/todas/{usuarioId}")
+    public ResponseEntity<List<ExtratoAlunoResponseDTO>> buscarTodasTransacoes(@PathVariable Long usuarioId) {
+        List<ExtratoAlunoResponseDTO> transacoesDto = transacaoService.buscarTodasTransacoes(usuarioId)
+                .stream()
+                .map(extrato -> new ExtratoAlunoResponseDTO(
+                        extrato.getMontante(),
+                        extrato.getRemetente().getId().equals(usuarioId) ? 
+                                extrato.getDestinatario().getNome() : extrato.getRemetente().getNome(),
+                        extrato.getDetalhes(),
+                        extrato.getData(),
+                        extrato.getRemetente().getId().equals(usuarioId) ? 
+                                extrato.getDestinatario().getFotoPerfil() : extrato.getRemetente().getFotoPerfil()  // Usa a foto correta conforme o usuário
+                ))
+                .collect(Collectors.toList());
+    
+        return ResponseEntity.ok(transacoesDto);
+    }
+    
 
     @Operation(description = "Debita moedas de um aluno para comprar uma vantagem.")
     @PostMapping("aluno/compra")
