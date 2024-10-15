@@ -21,6 +21,9 @@ public class AlunoService {
     @Autowired
     AlunoRepository alunoRepository;
 
+    @Autowired
+    InstituicaoEnsinoRepository InstituicaoEnsinoRepository;
+
     public Aluno salvarAluno(Aluno aluno) {
         return alunoRepository.save(aluno);
     }
@@ -66,5 +69,9 @@ public class AlunoService {
 
         return salvarAluno(aluno);
     }
-    
+
+    public byte[] buscarImgInstituicaoPorAluno(Aluno aluno) {
+        InstituicaoEnsino instituicao = instituicaoEnsinoRepository.findByAluno(aluno.getId());
+        return instituicao.getFotoPerfil();
+    }
 }
