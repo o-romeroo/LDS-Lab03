@@ -1,7 +1,9 @@
 package com.pucmg.lab03.dto;
 
+
 import org.springframework.web.multipart.MultipartFile;
 
+import io.micrometer.common.lang.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,10 +19,8 @@ public class VantagemUpdateDTO {
     private String descricao;
 
     private int preco;
-
-    private MultipartFile imagem;
-
-    private Long usuarioId;
     
+    @Nullable
+    private MultipartFile imagem;
 
 }

@@ -22,7 +22,8 @@ public class EmpresaController {
     @Autowired
     private EmpresaService empresaService;
 
-    @Operation(summary = "Cadastrar uma nova empresa")
+    @Operation(summary = "Cadastrar uma nova empresa", description = "Caso faça uma requisição sem dar upload de uma imagem, desmarcar a caixa \"<b>Send empty value</b>\".<br>\n" + //
+    "Tentei de tudo pra tratar esse valor empty e não consegui.")
     @PostMapping(value = "/cadastrar", consumes = "multipart/form-data")
     public ResponseEntity<String> cadastrarEmpresa(@ModelAttribute EmpresaRequestDTO empresaDto) {
         try {
