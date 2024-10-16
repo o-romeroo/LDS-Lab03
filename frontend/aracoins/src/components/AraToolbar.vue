@@ -79,5 +79,5 @@ import Toolbar from "primevue/toolbar";
 import Button from "primevue/button";
 import Avatar from "primevue/avatar";
 
-let saldo = 0;
+let saldo = 1240;
 </script>
