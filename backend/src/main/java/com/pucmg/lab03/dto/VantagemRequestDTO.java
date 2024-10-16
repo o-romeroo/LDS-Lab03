@@ -13,7 +13,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class VantagemRequestDTO {
     
-    private Long id;
     
     private String descricao;
 
