@@ -5,9 +5,20 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      redirect: '/professor/home'
+    },
+    {
+      path: '/professor/home',
+      name: 'professor-home',
+      component: () => import('../views/ProfessorView.vue')
+    },
+    {
+      path: '/professor/extrato',
+      name: 'professor-extrato',
       component: () => import('../views/ProfessorView.vue')
     }
+
+
   ]
 })
 
