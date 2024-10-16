@@ -27,13 +27,13 @@
         />
       </div>
 
-      <!-- <DataTable :value="alunos" :paginator="true" :rows="10">
+      <DataTable :value="alunos" :paginator="true" :rows="10">
         <Column field="name" header="Nome"></Column>
         <Column field="email" header="Email"></Column>
         <Column field="course" header="Curso"></Column>
         <Column field="registration" header="Matrícula"></Column>
         <Column field="actions" header="Ações"></Column>
-      </DataTable> -->
+      </DataTable>
     </div>
   </div>
 </template>
