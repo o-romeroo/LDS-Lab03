@@ -37,6 +37,7 @@ public class ProfessorService {
         professor.setFotoPerfil(professorRequestDTO.getFotoPerfil().getBytes());
         professor.setCpf(professorRequestDTO.getCpf());
         professor.setDepartamento(professorRequestDTO.getDepartamento());
+        professor.setSaldoMoedas(1000);
         
         InstituicaoEnsino instituicao = instituicaoEnsinoRepository.findById(professorRequestDTO.getInstituicaoEnsinoId())
             .orElseThrow(() -> new RuntimeException("Instituição de ensino não encontrada"));

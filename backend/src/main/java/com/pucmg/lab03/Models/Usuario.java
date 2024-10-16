@@ -47,6 +47,10 @@ public class Usuario {
     @Lob
     private byte[] fotoPerfil;
 
+    // @Column(columnDefinition = "BYTEA")
+    // @Lob
+    // private byte[] fotoPerfil;
+
     // Lista de transações em que o usuário é o remetente
     @OneToMany(mappedBy = "remetente", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore

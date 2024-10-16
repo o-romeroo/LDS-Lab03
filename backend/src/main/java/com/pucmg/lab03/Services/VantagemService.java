@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.pucmg.lab03.Models.Vantagem;
 import com.pucmg.lab03.Repositories.VantagemRepository;
+import com.pucmg.lab03.dto.VantagemRequestDTO;
+import java.io.IOException;
+
 
 @Service
 public class VantagemService {
@@ -20,6 +23,15 @@ public class VantagemService {
 
     public List<Vantagem> buscarTodasVantagens() {
         return vantagemRepository.findAll();
+    }
+
+    public Vantagem criarVantagem(VantagemRequestDTO vantagemDto) throws IOException {
+        Vantagem vantagem = new Vantagem();
+        vantagem.setDetalhes(vantagemDto.getDescricao());
+        vantagem.setPreco(vantagemDto.getPreco());
+        vantagem.setImagem(vantagemDto.getImagem().getBytes());
+        return vantagemRepository.save(vantagem);
+
     }
     
 }

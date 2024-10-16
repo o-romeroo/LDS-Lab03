@@ -22,7 +22,7 @@ public class RankingController {
     AlunoService alunoService;
 
     @Operation(description = "Retorna uma lista do ranking dos alunos, contendo a sua posição no ranking, nome, curso e total de moedas recebidas (Tela Melhores Alunos)")
-    @GetMapping("/all")
+    @GetMapping("/todos")
     public ResponseEntity<List<RankingResponseDTO>> obterRanking() {
         List<Aluno> alunosOrdenados = alunoService.melhoresAlunos();
 
@@ -31,6 +31,7 @@ public class RankingController {
         alunosOrdenados.forEach(aluno -> {
             ranking.add(new RankingResponseDTO(
                     posicaoRanking[0]++,
+                    aluno.getFotoPerfil(),
                     aluno.getNome(),
                     aluno.getCurso(),
                     aluno.getTotalMoedasRecebidas()));

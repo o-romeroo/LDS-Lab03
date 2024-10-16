@@ -73,6 +73,8 @@ public class TransacaoService {
                 transacao.setMontante(valor);
                 transacao.setDetalhes(detalhes);
                 transacao.setData(LocalDate.now());
+                transacao.setFotoDestinatario(((Aluno) destinatario).getFotoPerfil());
+                transacao.setFotoRemetente(((Professor) remetente).getFotoPerfil());
                 salvarTransacao(transacao); 
                 // envia email de notificacao para o aluno
                 try {
@@ -102,12 +104,16 @@ public class TransacaoService {
             transacao.setDetalhes(vantagem.getDetalhes());
             transacao.setData(LocalDate.now());
             if (vantagem.getEmpresa() == null) {
-                transacao.setDestinatario(vantagem.getInstituicaoEnsino());;
+                transacao.setDestinatario(vantagem.getInstituicaoEnsino());
+                transacao.setFotoDestinatario(vantagem.getInstituicaoEnsino().getFotoPerfil());
             }
             else {
                 transacao.setDestinatario(vantagem.getEmpresa());
+                transacao.setFotoDestinatario(vantagem.getEmpresa().getFotoPerfil());
             }
             transacao.setRemetente(aluno);
+            
+            transacao.setFotoRemetente(aluno.getFotoPerfil());
             salvarTransacao(transacao);
         } 
         
@@ -123,6 +129,10 @@ public class TransacaoService {
 
     public List<Transacao> buscarTransacoesRecebidas(Long destinatarioId) {
         return transacaoRepository.findByDestinatarioId(destinatarioId);
+    }
+
+    public List<Transacao> buscarTodasTransacoes(Long usuarioId){
+        return transacaoRepository.findByUsuarioId(usuarioId);
     }
 
     @Transactional

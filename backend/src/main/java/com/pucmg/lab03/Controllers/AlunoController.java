@@ -61,7 +61,7 @@ public class AlunoController {
                   "            `img.src = aluno.fotoPerfil;` // Usa a string Base64 diretamente no src da imagem<br>" +
                   "</pre>"
 )
-    @GetMapping("/all")
+    @GetMapping("/todos")
     public ResponseEntity<List<AlunoResponseDTO>> buscarTodosAlunos() {
         List<AlunoResponseDTO> alunosDto = alunoService.buscarTodosAlunos().stream()
                 .map(aluno -> new AlunoResponseDTO(
