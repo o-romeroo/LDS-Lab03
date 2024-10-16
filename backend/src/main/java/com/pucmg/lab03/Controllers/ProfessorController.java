@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pucmg.lab03.Services.ProfessorService;
 import com.pucmg.lab03.dto.ProfessorRequestDTO;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/professor")
 public class ProfessorController {
@@ -20,6 +22,7 @@ public class ProfessorController {
     @Autowired
     ProfessorService professorService;
     
+    @Operation(summary = "Cadastrar um novo professor")
     @PostMapping(value = "/cadastrar", consumes = "multipart/form-data")
     public ResponseEntity<String> cadastrarProfessor(@ModelAttribute ProfessorRequestDTO professorRequestDTO) {
         try {

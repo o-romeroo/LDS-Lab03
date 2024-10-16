@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pucmg.lab03.Services.EmpresaService;
 import com.pucmg.lab03.dto.EmpresaRequestDTO;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/empresa")
 public class EmpresaController {
@@ -20,7 +22,7 @@ public class EmpresaController {
     @Autowired
     private EmpresaService empresaService;
 
-    
+    @Operation(summary = "Cadastrar uma nova empresa")
     @PostMapping(value = "/cadastrar", consumes = "multipart/form-data")
     public ResponseEntity<String> cadastrarEmpresa(@ModelAttribute EmpresaRequestDTO empresaDto) {
         try {

@@ -17,6 +17,8 @@ import com.pucmg.lab03.Services.VantagemService;
 import com.pucmg.lab03.dto.VantagemRequestDTO;
 import com.pucmg.lab03.dto.VantagemResponseDTO;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/vantagem")
 public class VantagemController {
@@ -24,6 +26,8 @@ public class VantagemController {
     @Autowired
     private VantagemService vantagemService;
 
+    @Operation(summary = "Cadastrar uma nova vantagem",
+               description = "usuarioId é o id do usuário que está cadastrando a vantagem, podendo ser uma InstituicaoEnsino ou Empresa.")
     @PostMapping(value = "/cadastrar", consumes = "multipart/form-data")
     public ResponseEntity<String> cadastrarVantagem(@ModelAttribute VantagemRequestDTO vantagemDto) {
         try {
@@ -36,6 +40,7 @@ public class VantagemController {
         }
     }
 
+    @Operation(summary = "Lista com todas as vantagens")
     @GetMapping("/todas")
     public ResponseEntity<List<VantagemResponseDTO>> buscarTodasVantagens() {
         List<VantagemResponseDTO> vantagensDto = vantagemService.buscarTodasVantagens().stream()

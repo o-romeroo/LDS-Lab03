@@ -13,13 +13,14 @@ import lombok.Setter;
 @AllArgsConstructor
 public class VantagemRequestDTO {
     
-    private Long id;
     
     private String descricao;
 
     private int preco;
 
     private MultipartFile imagem;
+
+    private Long usuarioId;
     
 
 }
