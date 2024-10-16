@@ -12,6 +12,7 @@ import com.pucmg.lab03.Models.Vantagem;
 import com.pucmg.lab03.Repositories.UsuarioRepository;
 import com.pucmg.lab03.Repositories.VantagemRepository;
 import com.pucmg.lab03.dto.VantagemRequestDTO;
+import com.pucmg.lab03.dto.VantagemUpdateDTO;
 
 import jakarta.transaction.Transactional;
 
@@ -50,6 +51,21 @@ public class VantagemService {
                 }
         return vantagemRepository.save(vantagem);
 
+    }
+
+    @Transactional
+    public void deletarVantagem(Long id) {
+        Vantagem vantagem = vantagemRepository.findById(id).orElseThrow(() -> new RuntimeException("Vantagem não encontrada"));
+        vantagemRepository.delete(vantagem);
+    }
+
+    @Transactional
+    public Vantagem editarVantagem(Long id, VantagemUpdateDTO vantagemDto) throws IOException {
+        Vantagem vantagem = vantagemRepository.findById(id).orElseThrow(() -> new RuntimeException("Vantagem não encontrada"));
+        vantagem.setDetalhes(vantagemDto.getDescricao());
+        vantagem.setPreco(vantagemDto.getPreco());
+        vantagem.setImagem(vantagemDto.getImagem().getBytes());
+        return vantagemRepository.save(vantagem);
     }
     
 }

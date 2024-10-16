@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pucmg.lab03.Services.VantagemService;
 import com.pucmg.lab03.dto.VantagemRequestDTO;
 import com.pucmg.lab03.dto.VantagemResponseDTO;
+import com.pucmg.lab03.dto.VantagemUpdateDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -52,6 +54,26 @@ public class VantagemController {
                         vantagem.getPreco()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(vantagensDto);
+    }
+
+    @Operation(summary = "Deletar uma vantagem")
+    @PostMapping("/deletar")
+    public ResponseEntity<Void> deletarVantagem (@RequestParam Long id) {
+        vantagemService.deletarVantagem(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "editar uma vantagem")
+    @PostMapping(value = "/editar", consumes = "multipart/form-data")
+    public ResponseEntity<String> editarVantagem(@RequestParam Long id, @ModelAttribute VantagemUpdateDTO vantagemDto) {
+        try {
+            vantagemService.editarVantagem(id, vantagemDto);
+            return ResponseEntity.status(HttpStatus.OK).body("Vantagem atualizada com sucesso!");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao salvar vantagem.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
 }
