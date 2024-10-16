@@ -21,7 +21,7 @@ public class RankingController {
     @Autowired
     AlunoService alunoService;
 
-    @Operation(description = "Retorna uma lista do ranking dos alunos, contendo a sua posição no ranking, nome, curso e total de moedas recebidas (Tela Melhores Alunos)")
+    @Operation(summary = "Obter lista com ranking dos alunos", description = "Contem a sua posição no ranking, nome, curso e total de moedas recebidas (Tela Melhores Alunos)")
     @GetMapping("/todos")
     public ResponseEntity<List<RankingResponseDTO>> obterRanking() {
         List<Aluno> alunosOrdenados = alunoService.melhoresAlunos();

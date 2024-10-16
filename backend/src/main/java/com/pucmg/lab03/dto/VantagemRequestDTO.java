@@ -19,6 +19,8 @@ public class VantagemRequestDTO {
     private int preco;
 
     private MultipartFile imagem;
+
+    private Long usuarioId;
     
 
 }

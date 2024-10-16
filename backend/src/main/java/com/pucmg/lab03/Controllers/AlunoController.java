@@ -60,7 +60,7 @@ public class AlunoController {
                   "            const img = document.createElement('img');<br>" +
                   "            `img.src = aluno.fotoPerfil;` // Usa a string Base64 diretamente no src da imagem<br>" +
                   "</pre>"
-)
+)   
     @GetMapping("/todos")
     public ResponseEntity<List<AlunoResponseDTO>> buscarTodosAlunos() {
         List<AlunoResponseDTO> alunosDto = alunoService.buscarTodosAlunos().stream()
@@ -73,7 +73,7 @@ public class AlunoController {
         return ResponseEntity.ok(alunosDto);
     }
 
-    // ja cria um aluno com foto
+    @Operation(summary = "Cadastrar um novo aluno")
     @PostMapping(value = "/cadastrar", consumes = "multipart/form-data")
     public ResponseEntity<String> criarAluno(@ModelAttribute AlunoRequestDTO alunoDto) {
         try {
