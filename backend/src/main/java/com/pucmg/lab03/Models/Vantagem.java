@@ -1,6 +1,9 @@
 package com.pucmg.lab03.Models;
 
 
+import org.springframework.data.relational.core.mapping.Embedded.Empty;
+
+import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,6 +39,7 @@ public class Vantagem {
 
     @Column(columnDefinition = "LONGBLOB")
     @Lob
+    @Nullable
     private byte[] imagem;
 
     // @Column(columnDefinition = "BYTEA")

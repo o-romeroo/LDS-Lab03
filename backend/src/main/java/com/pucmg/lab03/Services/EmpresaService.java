@@ -1,6 +1,7 @@
 package com.pucmg.lab03.Services;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,6 @@ public class EmpresaService {
     @Autowired
     private EmpresaRepository empresaRepository;
 
-
     public Empresa salvarEmpresa(Empresa empresa) {
         return empresaRepository.save(empresa);
     }
@@ -28,8 +28,15 @@ public class EmpresaService {
         empresa.setNome(empresaDto.getNome());
         empresa.setLogin(empresaDto.getLogin());
         empresa.setSenha(empresaDto.getSenha());
-        empresa.setFotoPerfil(empresaDto.getFotoPerfil().getBytes());
+        if (empresaDto.getFotoPerfil() != null) {
+            empresa.setFotoPerfil(empresaDto.getFotoPerfil().getBytes());
+        } else {
+            // Carrega a imagem padrão como array de bytes
+            InputStream inputStream = getClass().getResourceAsStream("/static/images/default.png");
+            byte[] defaultImageBytes = inputStream.readAllBytes();
+            empresa.setFotoPerfil(defaultImageBytes);
+        }
         return empresaRepository.save(empresa);
     }
-    
+
 }

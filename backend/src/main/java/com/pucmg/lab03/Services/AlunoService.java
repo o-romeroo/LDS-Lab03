@@ -9,10 +9,10 @@ import com.pucmg.lab03.Repositories.AlunoRepository;
 import com.pucmg.lab03.Repositories.InstituicaoEnsinoRepository;
 import com.pucmg.lab03.dto.AlunoRequestDTO;
 
-
 import jakarta.transaction.Transactional;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @Service
@@ -36,7 +36,7 @@ public class AlunoService {
         return alunoRepository.findAll();
     }
 
-    public List<Aluno> melhoresAlunos(){
+    public List<Aluno> melhoresAlunos() {
         return alunoRepository.findAllByOrderByTotalMoedasRecebidasDesc();
 
     }
@@ -59,12 +59,18 @@ public class AlunoService {
         aluno.setEndereco(alunoDto.getEndereco());
         aluno.setCurso(alunoDto.getCurso());
 
-        // Converte MultipartFile para byte[] para a fotoPerfil
-        aluno.setFotoPerfil(alunoDto.getFotoPerfil().getBytes());
+        if (alunoDto.getFotoPerfil() != null) {
+            aluno.setFotoPerfil(alunoDto.getFotoPerfil().getBytes());
+        } else {
+            // Carrega a imagem padrão como array de bytes
+            InputStream inputStream = getClass().getResourceAsStream("/static/images/default.png");
+            byte[] defaultImageBytes = inputStream.readAllBytes();
+            aluno.setFotoPerfil(defaultImageBytes);
+        }
 
         // Busca e associa a Instituição de Ensino
         InstituicaoEnsino instituicao = instituicaoEnsinoRepository.findById(alunoDto.getInstituicaoEnsinoId())
-            .orElseThrow(() -> new RuntimeException("Instituição de ensino não encontrada"));
+                .orElseThrow(() -> new RuntimeException("Instituição de ensino não encontrada"));
         aluno.setInstituicaoEnsino(instituicao);
 
         return salvarAluno(aluno);
