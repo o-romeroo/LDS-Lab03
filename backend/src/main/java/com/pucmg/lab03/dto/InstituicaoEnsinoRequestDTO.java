@@ -17,6 +17,7 @@ public class InstituicaoEnsinoRequestDTO {
     String nome;
     String login;
     String senha;
+    String email;
     MultipartFile fotoPerfil;
 
 
