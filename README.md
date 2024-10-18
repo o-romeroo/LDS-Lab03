@@ -9,6 +9,9 @@
 ### Diagrama de Componentes
 ![Component Diagram](./images/diagrama_de_component.png)
 
+### Diagrama Entidade Relacionamento
+![Er Diagram](./images/diagrama_er.PNG)
+
 ### Histórias de Usuário
 | História de Usuário | Como | Quero | Para |
 |-------------------------|-----------------|-----------------------------------------|------------------------------------------------|
