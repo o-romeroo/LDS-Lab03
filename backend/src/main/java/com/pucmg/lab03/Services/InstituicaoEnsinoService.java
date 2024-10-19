@@ -25,6 +25,7 @@ public class InstituicaoEnsinoService {
         instituicaoEnsino.setNome(instituicaoEnsinoDto.getNome());
         instituicaoEnsino.setLogin(instituicaoEnsinoDto.getLogin());
         instituicaoEnsino.setSenha(instituicaoEnsinoDto.getSenha());
+        instituicaoEnsino.setEmail(instituicaoEnsinoDto.getEmail());
         if (instituicaoEnsinoDto.getFotoPerfil() != null) {
             instituicaoEnsino.setFotoPerfil(instituicaoEnsinoDto.getFotoPerfil().getBytes());
         } else {

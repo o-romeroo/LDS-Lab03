@@ -1,7 +1,7 @@
 package com.pucmg.lab03.Models;
 
 
-import org.springframework.data.relational.core.mapping.Embedded.Empty;
+
 
 import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.Column;

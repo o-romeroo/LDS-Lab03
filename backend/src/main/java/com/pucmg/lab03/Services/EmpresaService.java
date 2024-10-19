@@ -28,6 +28,7 @@ public class EmpresaService {
         empresa.setNome(empresaDto.getNome());
         empresa.setLogin(empresaDto.getLogin());
         empresa.setSenha(empresaDto.getSenha());
+        empresa.setEmail(empresaDto.getEmail());
         if (empresaDto.getFotoPerfil() != null) {
             empresa.setFotoPerfil(empresaDto.getFotoPerfil().getBytes());
         } else {

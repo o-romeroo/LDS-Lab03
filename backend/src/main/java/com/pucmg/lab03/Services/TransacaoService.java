@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 
 import com.pucmg.lab03.Models.Aluno;
+import com.pucmg.lab03.Models.Empresa;
+import com.pucmg.lab03.Models.InstituicaoEnsino;
 import com.pucmg.lab03.Models.Professor;
 import com.pucmg.lab03.Models.Transacao;
 import com.pucmg.lab03.Models.Usuario;
@@ -65,7 +67,8 @@ public class TransacaoService {
                 professorService.salvarProfessor((Professor) remetente);
 
                 ((Aluno) destinatario).setSaldoMoedas(((Aluno) destinatario).getSaldoMoedas() + valor);
-                ((Aluno) destinatario).setTotalMoedasRecebidas(((Aluno) destinatario).getTotalMoedasRecebidas() + valor);
+                ((Aluno) destinatario)
+                        .setTotalMoedasRecebidas(((Aluno) destinatario).getTotalMoedasRecebidas() + valor);
                 alunoService.salvarAluno((Aluno) destinatario);
                 // salva o historico da transacao
                 transacao.setRemetente(remetente);
@@ -75,10 +78,11 @@ public class TransacaoService {
                 transacao.setData(LocalDate.now());
                 transacao.setFotoDestinatario(((Aluno) destinatario).getFotoPerfil());
                 transacao.setFotoRemetente(((Professor) remetente).getFotoPerfil());
-                salvarTransacao(transacao); 
+                salvarTransacao(transacao);
                 // envia email de notificacao para o aluno
                 try {
-                    emailService.enviarNotificacaoRecebimentoMoedas(((Aluno) destinatario).getEmail(), valor, detalhes, (Professor) remetente);
+                    emailService.enviarNotificacaoRecebimentoMoedas(((Aluno) destinatario).getEmail(), valor, detalhes,
+                            (Professor) remetente);
                 } catch (MessagingException e) {
                     throw new RuntimeException("Falha ao enviar notificação por email", e);
                 }
@@ -96,6 +100,7 @@ public class TransacaoService {
         Aluno aluno = alunoService.buscarAluno(alunoId);
         Vantagem vantagem = vantagemService.buscarVantagem(vantagemId);
         Transacao transacao = new Transacao();
+        String tipo = "";
 
         if (aluno.getSaldoMoedas() >= vantagem.getPreco()) {
             aluno.setSaldoMoedas(aluno.getSaldoMoedas() - vantagem.getPreco());
@@ -106,21 +111,36 @@ public class TransacaoService {
             if (vantagem.getEmpresa() == null) {
                 transacao.setDestinatario(vantagem.getInstituicaoEnsino());
                 transacao.setFotoDestinatario(vantagem.getInstituicaoEnsino().getFotoPerfil());
-            }
-            else {
+                tipo = "instituicaoEnsino";
+            } else {
                 transacao.setDestinatario(vantagem.getEmpresa());
                 transacao.setFotoDestinatario(vantagem.getEmpresa().getFotoPerfil());
+                tipo = "Empresa";
             }
             transacao.setRemetente(aluno);
-            
             transacao.setFotoRemetente(aluno.getFotoPerfil());
             salvarTransacao(transacao);
-        } 
-        
+            try {
+                emailService.enviarCupomDescontoAluno(aluno.getEmail(), vantagem.getDetalhes(),
+                        transacao.getDestinatario(), vantagem);
+                if (tipo.equals("instituicaoEnsino")) {
+                    emailService.enviarConfirmacaoCompraEmpresa(
+                            ((InstituicaoEnsino) transacao.getDestinatario()).getEmail(), vantagem.getDetalhes(),
+                            aluno, vantagem);
+                } else if (tipo.equals("Empresa")) {
+                    emailService.enviarConfirmacaoCompraEmpresa(
+                            ((Empresa) transacao.getDestinatario()).getEmail(), vantagem.getDetalhes(),
+                            aluno, vantagem);
+                }
+            } catch (MessagingException e) {
+                throw new RuntimeException("Falha ao enviar cupom por email", e);
+            }
+        }
+
         else {
             throw new RuntimeException("Saldo insuficiente");
         }
-        // falta criar e chamar o método do cupom ir para o email do aluno
+
     }
 
     public List<Transacao> buscarTransacoesEnviadas(Long remetenteId) {
@@ -131,7 +151,7 @@ public class TransacaoService {
         return transacaoRepository.findByDestinatarioId(destinatarioId);
     }
 
-    public List<Transacao> buscarTodasTransacoes(Long usuarioId){
+    public List<Transacao> buscarTodasTransacoes(Long usuarioId) {
         return transacaoRepository.findByUsuarioId(usuarioId);
     }
 
