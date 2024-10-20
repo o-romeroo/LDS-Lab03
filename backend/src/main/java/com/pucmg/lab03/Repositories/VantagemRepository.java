@@ -9,4 +9,8 @@ import com.pucmg.lab03.Models.Vantagem;
 public interface VantagemRepository extends JpaRepository<Vantagem, Long> {
     
     public List<Vantagem> findAll();
+
+    public List<Vantagem> findByEmpresaId(Long empresaId);
+
+    public List<Vantagem> findByInstituicaoEnsinoId(Long instituicaoEnsinoId);
 }

@@ -37,4 +37,9 @@ public class InstituicaoEnsinoService {
         return instituicaoEnsinoRepository.save(instituicaoEnsino);
     }
 
+    public InstituicaoEnsino buscarInstituicaoEnsino(Long id) {
+        return instituicaoEnsinoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Instituição de ensino não encontrada"));
+    }
+
 }

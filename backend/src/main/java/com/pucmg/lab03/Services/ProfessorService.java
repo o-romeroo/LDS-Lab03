@@ -27,6 +27,10 @@ public class ProfessorService {
         return professorRepository.save(professor);
     }
 
+    public Professor buscarProfessor(Long id) {
+        return professorRepository.findById(id).orElseThrow(() -> new RuntimeException("Professor não encontrado"));
+    }
+    
     @Transactional
     public Professor criarProfessor(ProfessorRequestDTO professorRequestDTO) throws IOException {
         Professor professor = new Professor();

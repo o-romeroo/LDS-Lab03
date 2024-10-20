@@ -5,13 +5,17 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pucmg.lab03.Models.Professor;
 import com.pucmg.lab03.Services.ProfessorService;
 import com.pucmg.lab03.dto.ProfessorRequestDTO;
+import com.pucmg.lab03.dto.ProfessorResponseHeaderDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -35,5 +39,19 @@ public class ProfessorController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
+    @Operation(summary = "Obter o saldo e a foto de perfil de um professor para o header")
+    @GetMapping("/header")
+    public ResponseEntity<ProfessorResponseHeaderDTO> buscarProfessor(@RequestParam Long id) {
+    try {
+        Professor professor = professorService.buscarProfessor(id);
+
+        ProfessorResponseHeaderDTO ProfessorHeader = new ProfessorResponseHeaderDTO(professor.getSaldoMoedas(), professor.getFotoPerfil());
+
+        return ResponseEntity.ok(ProfessorHeader);
+    } catch (RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
+}
 
 }
