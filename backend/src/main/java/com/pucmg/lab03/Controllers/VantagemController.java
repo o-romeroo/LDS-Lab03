@@ -79,5 +79,19 @@ public class VantagemController {
         }
     }
 
+    @Operation(summary = "Lista com todas as vantagens de uma empresa ou instituição de ensino")
+    @GetMapping("/todasById")
+    public ResponseEntity<List<VantagemResponseDTO>> buscarTodasVantagensUsuario(@RequestParam Long usuarioId) {
+        List<VantagemResponseDTO> vantagensDto = vantagemService.buscarVantagensPorUsuario(usuarioId).stream()
+                .map(vantagem -> new VantagemResponseDTO(
+                        vantagem.getEmpresa().equals(null) ? vantagem.getInstituicaoEnsino().getNome()
+                                : vantagem.getEmpresa().getNome(),
+                        vantagem.getImagem(),
+                        vantagem.getDetalhes(),
+                        vantagem.getPreco()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(vantagensDto);
+    }
+    
 
 }
