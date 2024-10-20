@@ -40,4 +40,8 @@ public class EmpresaService {
         return empresaRepository.save(empresa);
     }
 
+    public Empresa buscarEmpresa(Long id) {
+        return empresaRepository.findById(id).orElseThrow(() -> new RuntimeException("Empresa não encontrada"));
+    }
+
 }
