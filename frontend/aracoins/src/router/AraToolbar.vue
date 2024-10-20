@@ -1,22 +1,30 @@
-
-<template>
+ <template>
   <div class="card">
     <Toolbar class="toolbar">
       <template #start>
         <div class="contentToolbarItens">
-          <Button style="background-color: black" label="Home" text plain
-            ><span class="buttonToolbarspan">Home</span></Button
-          >
-          <Button style="background-color: black" label="Extrato" text plain
-            ><span class="buttonToolbarspan">Extrato</span></Button
-          >
-          <Button
-            style="background-color: black"
-            label="Melhores_Alunos"
-            text
-            plain
-            ><span class="buttonToolbarspan">Melhores_Alunos</span></Button
-          >
+          <router-link to="/professor/home" active-class="button-active">
+            <Button style="background-color: black" label="Home" text plain
+              ><span class="buttonToolbarspan">Home</span></Button
+            >
+          </router-link>
+
+          <router-link to="/professor/extrato" active-class="button-active">
+            <Button style="background-color: black" label="Extrato" text plain
+              ><span class="buttonToolbarspan">Extrato</span></Button
+            >
+          </router-link>
+          
+          <router-link to="/professor/melhores-alunos" active-class="button-active">
+            <Button
+              style="background-color: black"
+              label="Melhores_Alunos"
+              text
+              plain
+              ><span class="buttonToolbarspan">Melhores_Alunos</span></Button
+            >
+          </router-link>
+
         </div>
       </template>
 
@@ -26,7 +34,7 @@
         <img
           src="@/assets/aracoin.png"
           alt="AraCoin"
-          style="width: 32px; height: 32px; margin-right: 1rem"
+          style="width: 40px; height: 32px; margin-right: 1rem"
         />
 
         <div class="contentUser">
@@ -59,8 +67,14 @@
   color: white;
 }
 
+.button-active .buttonToolbarspan {
+  color: yellow;
+  opacity: 0.9;
+}
+
 .buttonToolbarspan {
   color: white;
+  opacity: 0.7;
 }
 
 .buttonToolbarspan:hover {
@@ -81,3 +95,4 @@ import Avatar from "primevue/avatar";
 
 let saldo = 1240;
 </script>
+
