@@ -6,13 +6,13 @@ import App from './App.vue'
 import router from './router'
 import Aura from '@primevue/themes/aura';
 
-import 'primeicons/primeicons.css'; 
-import 'primeflex/primeflex.css'; 
+import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.css';
 
 
 
 const app = createApp(App)
-app.use(PrimeVue,{
+app.use(PrimeVue, {
     theme: {
         preset: Aura
     }
