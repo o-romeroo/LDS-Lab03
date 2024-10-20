@@ -40,7 +40,4 @@ public class Aluno extends Usuario{
 
     @Column
     private int totalMoedasRecebidas;
-
-
-    
 }
