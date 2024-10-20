@@ -47,7 +47,7 @@ public class Usuario {
     // @Lob
     // private byte[] fotoPerfil;
 
-    @Column(columnDefinition = "BYTEA")
+    // @Column(columnDefinition = "BYTEA")
     @Lob
     private byte[] fotoPerfil;
 

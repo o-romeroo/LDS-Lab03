@@ -42,7 +42,7 @@ public class Vantagem {
     // @Nullable
     // private byte[] imagem;
 
-    @Column(columnDefinition = "BYTEA")
+    // @Column(columnDefinition = "BYTEA")
     @Lob
     private byte[] imagem;
 
