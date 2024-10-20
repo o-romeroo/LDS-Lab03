@@ -1,1 +1,1 @@
-web: cd backend && mvn clean install && java -jar target/lab03-0.0.1-SNAPSHOT.jar
+web: cd backend && ./mvnw clean install && java -jar backend/target/lab03-0.0.1-SNAPSHOT.jar
