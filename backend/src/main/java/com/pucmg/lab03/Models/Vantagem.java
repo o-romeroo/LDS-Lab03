@@ -37,14 +37,14 @@ public class Vantagem {
     @Column
     private int preco;
 
-    @Column(columnDefinition = "LONGBLOB")
-    @Lob
-    @Nullable
-    private byte[] imagem;
-
-    // @Column(columnDefinition = "BYTEA")
+    // @Column(columnDefinition = "LONGBLOB")
     // @Lob
+    // @Nullable
     // private byte[] imagem;
+
+    @Column(columnDefinition = "BYTEA")
+    @Lob
+    private byte[] imagem;
 
     @ManyToOne
     @JoinColumn(name = "empresa_id", nullable = true)
