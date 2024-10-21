@@ -43,13 +43,13 @@ public class Usuario {
     @Column
     private String senha;
 
-    @Column(columnDefinition = "LONGBLOB")
-    @Lob
-    private byte[] fotoPerfil;
-
-    // @Column(columnDefinition = "BYTEA")
+    // @Column(columnDefinition = "LONGBLOB")
     // @Lob
     // private byte[] fotoPerfil;
+
+    @Column(columnDefinition = "BYTEA")
+    @Lob
+    private byte[] fotoPerfil;
 
     // Lista de transações em que o usuário é o remetente
     @OneToMany(mappedBy = "remetente", cascade = CascadeType.ALL, orphanRemoval = true)
