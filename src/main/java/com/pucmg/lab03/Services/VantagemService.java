@@ -37,6 +37,7 @@ public class VantagemService {
         return vantagemRepository.findAll();
     }
 
+    @Transactional
     public List<Vantagem> buscarVantagensPorUsuario(Long usuarioId) {
         Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
