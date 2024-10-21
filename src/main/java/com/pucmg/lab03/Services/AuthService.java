@@ -29,7 +29,7 @@ public class AuthService {
         }
     }
     
-    private String determinarTipoUsuario(Usuario usuario) {
+    public String determinarTipoUsuario(Usuario usuario) {
         if (usuario instanceof Aluno) {
             return "Aluno";
         } else if (usuario instanceof Professor) {

@@ -10,14 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pucmg.lab03.Models.Empresa;
 import com.pucmg.lab03.Services.EmpresaService;
-import com.pucmg.lab03.dto.EmpresaInstituicaoFotoResponseDTO;
 import com.pucmg.lab03.dto.EmpresaRequestDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -41,18 +37,6 @@ public class EmpresaController {
         }
     }
 
-    @Operation(summary = "Obter a foto de perfil de uma empresa para o header")
-    @GetMapping("/header")
-    public ResponseEntity<EmpresaInstituicaoFotoResponseDTO> buscarEmpresa(@RequestParam Long id) {
-        try {
-            Empresa empresa = empresaService.buscarEmpresa(id);
-            EmpresaInstituicaoFotoResponseDTO empresaResponse = new EmpresaInstituicaoFotoResponseDTO(empresa.getFotoPerfil());
-            return ResponseEntity.ok(empresaResponse);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-        
-    }
-    
+
 
 }

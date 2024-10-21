@@ -10,14 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pucmg.lab03.Models.InstituicaoEnsino;
 import com.pucmg.lab03.Services.InstituicaoEnsinoService;
-import com.pucmg.lab03.dto.EmpresaInstituicaoFotoResponseDTO;
 import com.pucmg.lab03.dto.InstituicaoEnsinoRequestDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -40,20 +37,6 @@ public class InstituicaoEnsinoController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-
-    @Operation(summary = "Obter a foto de perfil de uma instituição de ensino para o header")
-    @GetMapping("/header")
-    public ResponseEntity<EmpresaInstituicaoFotoResponseDTO> buscarInstituicaoEnsino(@RequestParam Long id) {
-        try {
-            InstituicaoEnsino instituicaoEnsino = instituicaoEnsinoService.buscarInstituicaoEnsino(id);
-            EmpresaInstituicaoFotoResponseDTO instituicaoEnsinoResponse = new EmpresaInstituicaoFotoResponseDTO(instituicaoEnsino.getFotoPerfil());
-            return ResponseEntity.ok(instituicaoEnsinoResponse);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-        
-    }
-
 
 
 }

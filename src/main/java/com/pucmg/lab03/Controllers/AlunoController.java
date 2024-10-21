@@ -15,13 +15,11 @@ import org.springframework.http.ResponseEntity;
 
 import com.pucmg.lab03.dto.AlunoRequestDTO;
 import com.pucmg.lab03.dto.AlunoResponseDTO;
-import com.pucmg.lab03.dto.AlunoProfessorResponseHeaderDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
 
-import com.pucmg.lab03.Models.Aluno;
 import com.pucmg.lab03.Services.AlunoService;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -90,20 +88,6 @@ public class AlunoController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-
-    @Operation(summary = "Obter o saldo e a foto de perfil de um aluno para o header")
-    @GetMapping("/header")
-    public ResponseEntity<AlunoProfessorResponseHeaderDTO> buscarAluno(@RequestParam Long id) {
-    try {
-        Aluno aluno = alunoService.buscarAluno(id);
-
-        AlunoProfessorResponseHeaderDTO alunoHeader = new AlunoProfessorResponseHeaderDTO(aluno.getSaldoMoedas(), aluno.getFotoPerfil());
-
-        return ResponseEntity.ok(alunoHeader);
-    } catch (RuntimeException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    }
-}
 
     
 
