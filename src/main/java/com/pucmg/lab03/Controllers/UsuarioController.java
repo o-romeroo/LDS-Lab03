@@ -47,7 +47,7 @@ public class UsuarioController {
     private InstituicaoEnsinoService instituicaoService;
 
     @Operation(summary = "Obter o header do usuario de acordo com seu tipo")
-@GetMapping("/header/professor_aluno")
+@GetMapping("/header")
 public ResponseEntity<Object> buscarUsuarioHeader(@RequestParam Long id) {
     try {
         Usuario usuario = usuarioService.buscarUsuario(id);
