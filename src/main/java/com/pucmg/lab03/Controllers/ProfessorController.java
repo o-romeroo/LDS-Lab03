@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pucmg.lab03.Models.Professor;
 import com.pucmg.lab03.Services.ProfessorService;
+import com.pucmg.lab03.dto.AlunoProfessorResponseHeaderDTO;
 import com.pucmg.lab03.dto.ProfessorRequestDTO;
-import com.pucmg.lab03.dto.ProfessorResponseHeaderDTO;
+
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -42,11 +43,11 @@ public class ProfessorController {
 
     @Operation(summary = "Obter o saldo e a foto de perfil de um professor para o header")
     @GetMapping("/header")
-    public ResponseEntity<ProfessorResponseHeaderDTO> buscarProfessor(@RequestParam Long id) {
+    public ResponseEntity<AlunoProfessorResponseHeaderDTO> buscarProfessor(@RequestParam Long id) {
     try {
         Professor professor = professorService.buscarProfessor(id);
 
-        ProfessorResponseHeaderDTO ProfessorHeader = new ProfessorResponseHeaderDTO(professor.getSaldoMoedas(), professor.getFotoPerfil());
+        AlunoProfessorResponseHeaderDTO ProfessorHeader = new AlunoProfessorResponseHeaderDTO(professor.getSaldoMoedas(), professor.getFotoPerfil());
 
         return ResponseEntity.ok(ProfessorHeader);
     } catch (RuntimeException e) {

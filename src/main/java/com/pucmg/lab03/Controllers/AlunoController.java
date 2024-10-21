@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.pucmg.lab03.dto.AlunoRequestDTO;
 import com.pucmg.lab03.dto.AlunoResponseDTO;
-import com.pucmg.lab03.dto.AlunoResponseHeaderDTO;
+import com.pucmg.lab03.dto.AlunoProfessorResponseHeaderDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -93,11 +93,11 @@ public class AlunoController {
 
     @Operation(summary = "Obter o saldo e a foto de perfil de um aluno para o header")
     @GetMapping("/header")
-    public ResponseEntity<AlunoResponseHeaderDTO> buscarAluno(@RequestParam Long id) {
+    public ResponseEntity<AlunoProfessorResponseHeaderDTO> buscarAluno(@RequestParam Long id) {
     try {
         Aluno aluno = alunoService.buscarAluno(id);
 
-        AlunoResponseHeaderDTO alunoHeader = new AlunoResponseHeaderDTO(aluno.getSaldoMoedas(), aluno.getFotoPerfil());
+        AlunoProfessorResponseHeaderDTO alunoHeader = new AlunoProfessorResponseHeaderDTO(aluno.getSaldoMoedas(), aluno.getFotoPerfil());
 
         return ResponseEntity.ok(alunoHeader);
     } catch (RuntimeException e) {

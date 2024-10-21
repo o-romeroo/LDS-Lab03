@@ -8,19 +8,19 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProfessorResponseHeaderDTO {
+public class AlunoProfessorResponseHeaderDTO {
 
     private int saldoMoedas;
     private String fotoPerfil;
     
 
-    public ProfessorResponseHeaderDTO(int saldoMoedas, byte[] fotoPerfil) {
+    public AlunoProfessorResponseHeaderDTO(int saldoMoedas, byte[] fotoPerfil) {
         this.saldoMoedas = saldoMoedas;
         this.fotoPerfil = "data:image/png;base64," + Base64.getEncoder().encodeToString(fotoPerfil);  // Converte para Base64
     }
     
 
-    public ProfessorResponseHeaderDTO() {
+    public AlunoProfessorResponseHeaderDTO() {
     }
 
 
