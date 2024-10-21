@@ -9,6 +9,7 @@ import com.pucmg.lab03.Models.Professor;
 import com.pucmg.lab03.Models.Usuario;
 import com.pucmg.lab03.Repositories.UsuarioRepository;
 import com.pucmg.lab03.dto.LoginResponseDTO;
+import jakarta.transaction.Transactional;
 
 @Service
 public class AuthService {
@@ -16,6 +17,7 @@ public class AuthService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Transactional
     public LoginResponseDTO login(String login, String senha) {
         Usuario usuario = usuarioRepository.findByLogin(login);
     
