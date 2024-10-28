@@ -5,49 +5,55 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/professor/home'
+      redirect: '/login'
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/Login/Login.vue')
+    }
+    ,
     {
       path: '/professor/home',
       name: 'professor-home',
       component: () => import('../views/Professor/ProfessorHomeView.vue'),
-      // beforeEnter: validaRota('professor')
+      // beforeEnter: validaRota('Professor')
     },
     {
       path: '/professor/extrato',
       name: 'professor-extrato',
       component: () => import('../views/Professor/ProfessorExtratoView.vue'),
-      // beforeEnter: validaRota('professor')
+      // beforeEnter: validaRota('Professor')
     },
     {
       path: '/professor/melhores-alunos',
       name: 'professor-melhores-alunos',
       component: () => import('../views/Professor/MelhoresAlunos.vue'),
-      // beforeEnter: validaRota('professor')
+      // beforeEnter: validaRota('Professor')
     },
     {
       path: '/aluno/home',
       name: 'aluno-home',
       component: () => import('../views/Aluno/AlunoHomeView.vue'),
-      // beforeEnter: validaRota('aluno')
+      // beforeEnter: validaRota('Aluno')
     },
     {
       path: '/aluno/extrato',
       name: 'aluno-extrato',
       component: () => import('../views/Aluno/AlunoExtratoView.vue'),
-      // beforeEnter: validaRota('aluno')
+      // beforeEnter: validaRota('Aluno')
     },
     {
       path: '/aluno/melhores-alunos',
       name: 'aluno-melhores-alunos',
       component: () => import('../views/Aluno/MelhoresAlunos.vue'),
-      // beforeEnter: validaRota('aluno')
+      // beforeEnter: validaRota('Aluno')
     },
     {
       path: '/empresa/home',
       name: 'empresa-home',
       component: () => import('../views/Empresa/EmpresaHomeView.vue'),
-      beforeEnter: validaRota('empresa')
+      // beforeEnter: validaRota('Empresa')
     }
 
 

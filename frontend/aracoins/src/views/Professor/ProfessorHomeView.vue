@@ -64,7 +64,7 @@
     </DataTable>
 
     <Dialog
-      v-model:visible="showDialog"
+      v-model="showDialog"
       style="width: 40%; text-align: center"
     >
       <template #header>
@@ -85,7 +85,7 @@ import { ref } from "vue";
 import InputText from "primevue/inputtext";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
-
+import professorService from '../../services/professorService.js';
 import aracoinPNG from "../../assets/aracoin.png";
 import douglas01 from "../../assets/douglas01.jpg";
 import douglas02 from "../../assets/douglas02.jpg";
@@ -121,117 +121,117 @@ function openDialogEnviarMoedas() {
 
 
 onMounted(() => {
-  // alunoService.getAlunos().then((response) => {
-  //   alunos.value = response.data;
-  // });
+  professorService.getAlunos().then((response) => {
+    alunos.value = response.data;
+  });
 
-  alunos.value = [
-    {
-      id: 1,
-      fotoPerfil: douglas01,
-      nome: "Douglas Machado",
-      curso: "Engenharia",
-      acaoImg: aracoinPNG,
-    },
-    {
-      id: 2,
-      fotoPerfil: douglas02,
-      nome: "Douglas Machado 02",
-      curso: "Computação",
-      acaoImg: aracoinPNG,
-    },
-    {
-      id: 3,
-      fotoPerfil: douglas03,
-      nome: "Douglas Machado 03",
-      curso: "Fisica",
-      acaoImg: aracoinPNG,
-    },
-    {
-      id: 1,
-      fotoPerfil: douglas01,
-      nome: "Douglas Machado",
-      curso: "Engenharia",
-      acaoImg: aracoinPNG,
-    },
-    {
-      id: 2,
-      fotoPerfil: douglas02,
-      nome: "Douglas Machado 02",
-      curso: "Computação",
-      acaoImg: aracoinPNG,
-    },
-    {
-      id: 3,
-      fotoPerfil: douglas03,
-      nome: "Douglas Machado 03",
-      curso: "Fisica",
-      acaoImg: aracoinPNG,
-    },
-    {
-      id: 1,
-      fotoPerfil: douglas01,
-      nome: "Douglas Machado",
-      curso: "Engenharia",
-      acaoImg: aracoinPNG,
-    },
-    {
-      id: 2,
-      fotoPerfil: douglas02,
-      nome: "Douglas Machado 02",
-      curso: "Computação",
-      acaoImg: aracoinPNG,
-    },
-    {
-      id: 3,
-      fotoPerfil: douglas03,
-      nome: "Douglas Machado 03",
-      curso: "Fisica",
-      acaoImg: aracoinPNG,
-    },
-    {
-      id: 1,
-      fotoPerfil: douglas01,
-      nome: "Douglas Machado",
-      curso: "Engenharia",
-      acaoImg: aracoinPNG,
-    },
-    {
-      id: 2,
-      fotoPerfil: douglas02,
-      nome: "Douglas Machado 02",
-      curso: "Computação",
-      acaoImg: aracoinPNG,
-    },
-    {
-      id: 3,
-      fotoPerfil: douglas03,
-      nome: "Douglas Machado 03",
-      curso: "Fisica",
-      acaoImg: aracoinPNG,
-    },
-    {
-      id: 1,
-      fotoPerfil: douglas01,
-      nome: "Douglas Machado",
-      curso: "Engenharia",
-      acaoImg: aracoinPNG,
-    },
-    {
-      id: 2,
-      fotoPerfil: douglas02,
-      nome: "Douglas Machado 02",
-      curso: "Computação",
-      acaoImg: aracoinPNG,
-    },
-    {
-      id: 3,
-      fotoPerfil: douglas03,
-      nome: "Douglas Machado 03",
-      curso: "Fisica",
-      acaoImg: aracoinPNG,
-    },
-  ];
+  // alunos.value = [
+  //   {
+  //     id: 1,
+  //     fotoPerfil: douglas01,
+  //     nome: "Douglas Machado",
+  //     curso: "Engenharia",
+  //     acaoImg: aracoinPNG,
+  //   },
+  //   {
+  //     id: 2,
+  //     fotoPerfil: douglas02,
+  //     nome: "Douglas Machado 02",
+  //     curso: "Computação",
+  //     acaoImg: aracoinPNG,
+  //   },
+  //   {
+  //     id: 3,
+  //     fotoPerfil: douglas03,
+  //     nome: "Douglas Machado 03",
+  //     curso: "Fisica",
+  //     acaoImg: aracoinPNG,
+  //   },
+  //   {
+  //     id: 1,
+  //     fotoPerfil: douglas01,
+  //     nome: "Douglas Machado",
+  //     curso: "Engenharia",
+  //     acaoImg: aracoinPNG,
+  //   },
+  //   {
+  //     id: 2,
+  //     fotoPerfil: douglas02,
+  //     nome: "Douglas Machado 02",
+  //     curso: "Computação",
+  //     acaoImg: aracoinPNG,
+  //   },
+  //   {
+  //     id: 3,
+  //     fotoPerfil: douglas03,
+  //     nome: "Douglas Machado 03",
+  //     curso: "Fisica",
+  //     acaoImg: aracoinPNG,
+  //   },
+  //   {
+  //     id: 1,
+  //     fotoPerfil: douglas01,
+  //     nome: "Douglas Machado",
+  //     curso: "Engenharia",
+  //     acaoImg: aracoinPNG,
+  //   },
+  //   {
+  //     id: 2,
+  //     fotoPerfil: douglas02,
+  //     nome: "Douglas Machado 02",
+  //     curso: "Computação",
+  //     acaoImg: aracoinPNG,
+  //   },
+  //   {
+  //     id: 3,
+  //     fotoPerfil: douglas03,
+  //     nome: "Douglas Machado 03",
+  //     curso: "Fisica",
+  //     acaoImg: aracoinPNG,
+  //   },
+  //   {
+  //     id: 1,
+  //     fotoPerfil: douglas01,
+  //     nome: "Douglas Machado",
+  //     curso: "Engenharia",
+  //     acaoImg: aracoinPNG,
+  //   },
+  //   {
+  //     id: 2,
+  //     fotoPerfil: douglas02,
+  //     nome: "Douglas Machado 02",
+  //     curso: "Computação",
+  //     acaoImg: aracoinPNG,
+  //   },
+  //   {
+  //     id: 3,
+  //     fotoPerfil: douglas03,
+  //     nome: "Douglas Machado 03",
+  //     curso: "Fisica",
+  //     acaoImg: aracoinPNG,
+  //   },
+  //   {
+  //     id: 1,
+  //     fotoPerfil: douglas01,
+  //     nome: "Douglas Machado",
+  //     curso: "Engenharia",
+  //     acaoImg: aracoinPNG,
+  //   },
+  //   {
+  //     id: 2,
+  //     fotoPerfil: douglas02,
+  //     nome: "Douglas Machado 02",
+  //     curso: "Computação",
+  //     acaoImg: aracoinPNG,
+  //   },
+  //   {
+  //     id: 3,
+  //     fotoPerfil: douglas03,
+  //     nome: "Douglas Machado 03",
+  //     curso: "Fisica",
+  //     acaoImg: aracoinPNG,
+  //   },
+  // ];
 });
 </script>
 

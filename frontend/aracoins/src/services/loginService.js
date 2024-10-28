@@ -1,6 +1,5 @@
 
 import axios from 'axios';
-import envoriments from '../enviroment/enviroments.js';
 import environments from '../enviroment/enviroments.js';
 
 const apiClient = axios.create({
@@ -12,7 +11,7 @@ const apiClient = axios.create({
 });
 
 export default {
-    getAlunos() {
-        return apiClient.get('/aluno/todos');
-    },
+    login(credenciais) {
+        return apiClient.get('/auth/login?login='+credenciais.login+'&senha='+credenciais.senha);
+    }
 }

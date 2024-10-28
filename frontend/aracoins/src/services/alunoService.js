@@ -1,9 +1,9 @@
 
 import axios from 'axios';
-
+import environments from '../enviroment/enviroments.js';
 
 const apiClient = axios.create({
-    baseURL: 'http://localhost:8080/aluno',
+    baseURL: environments.prod.API_URL,
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -11,7 +11,5 @@ const apiClient = axios.create({
 });
 
 export default {
-    getAlunos() {
-        return apiClient.get('/todos');
-    },
+    
 }
