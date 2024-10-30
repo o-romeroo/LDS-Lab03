@@ -24,23 +24,28 @@ public class AlunoService {
     @Autowired
     InstituicaoEnsinoRepository InstituicaoEnsinoRepository;
 
+    @Transactional
     public Aluno salvarAluno(Aluno aluno) {
         return alunoRepository.save(aluno);
     }
 
+    @Transactional
     public Aluno buscarAluno(Long id) {
         return alunoRepository.findById(id).orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
     }
 
+    @Transactional
     public List<Aluno> buscarTodosAlunos() {
         return alunoRepository.findAll();
     }
 
+    @Transactional
     public List<Aluno> melhoresAlunos() {
         return alunoRepository.findAllByOrderByTotalMoedasRecebidasDesc();
 
     }
 
+    @Transactional
     public Aluno buscarAlunoPorEmail(String email) {
         return alunoRepository.findByEmail(email);
     }
