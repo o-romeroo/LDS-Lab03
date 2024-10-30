@@ -4,14 +4,14 @@ import Login from "./views/Login/Login.vue";
 </script>
 
 <template>
-    <div v-if="!!typesOfUser.find(type => type === userType)">
-      <ara-toolbar :saldo="saldo" class="toolbar-fixed" />
-      <div style="margin-top: 5rem">
-        <RouterView />
-      </div>
+  <div v-if="!!typesOfUser.find(type => type === userType)">
+    <ara-toolbar class="toolbar-fixed" />
+    <div style="margin-top: 5rem">
+      <RouterView />
     </div>
+  </div>
 
-    <Login v-else />
+  <Login v-else />
 </template>
 
 <script>

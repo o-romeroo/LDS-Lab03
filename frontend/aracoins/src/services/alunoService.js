@@ -11,5 +11,7 @@ const apiClient = axios.create({
 });
 
 export default {
-    
+    getAlunos() {
+        return apiClient.get('/aluno/todos');
+    }
 }

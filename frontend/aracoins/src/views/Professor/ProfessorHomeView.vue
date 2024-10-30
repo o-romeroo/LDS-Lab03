@@ -2,22 +2,14 @@
   <div>
     <div class="container">
       <div class="containerBuscarAluno">
-        <InputText
-          v-model="searchQuery"
-          placeholder="Procurar Aluno por Nome"
-          class="search-input"
-        />
+        <InputText v-model="searchQuery" placeholder="Procurar Aluno por Nome" class="search-input" />
         <button class="search-icon-button" @click="buscarAluno">
           <span class="pi pi-search"></span>
         </button>
       </div>
 
       <div class="containerBuscarAluno">
-        <InputText
-          v-model="searchQueryByCurso"
-          placeholder="Procurar Aluno por Curso"
-          class="search-input"
-        />
+        <InputText v-model="searchQueryByCurso" placeholder="Procurar Aluno por Curso" class="search-input" />
         <button class="search-icon-button" @click="buscarAlunoByCurso">
           <span class="pi pi-search"></span>
         </button>
@@ -26,28 +18,16 @@
       <div></div>
       <div></div>
     </div>
-    <DataTable
-      class="dataTableHowView"
-      :value="alunos"
-      :paginator="true"
-      stripedRows 
-      :rows="6"
-    >
+    <DataTable class="dataTableHowView" :value="alunos" :paginator="true" stripedRows :rows="6">
       <Column style="width: 33%" field="nome" header="Nome">
         <template #body="slotProps">
-          <div
-            style="
+          <div style="
               display: flex;
               justify-content: flex-start;
               align-items: center;
               gap: 1rem;
-            "
-          >
-            <img
-              class="fotoPerfil"
-              :src="slotProps.data.fotoPerfil"
-              alt="Foto do Perfil"
-            />
+            ">
+            <img class="fotoPerfil" :src="slotProps.data.fotoPerfil" alt="Foto do Perfil" />
 
             {{ slotProps.data.nome }}
           </div>
@@ -63,18 +43,16 @@
       </Column>
     </DataTable>
 
-    <Dialog
-      v-model="showDialog"
-      style="width: 40%; text-align: center"
-    >
+    <Dialog v-model:visible="showDialog" modal>
+
       <template #header>
         <div class="headerDialog">
           <p>Enviar Moedas</p>
         </div>
       </template>
-
       <ModalTransferirMoedas />
     </Dialog>
+
   </div>
 </template>
 
@@ -100,139 +78,17 @@ const filteredAlunos = ref([]);
 
 const showDialog = ref(false);
 
-const courses = ref([
-  { name: "Computer Science", code: "CS" },
-  { name: "Information Systems", code: "IS" },
-  { name: "Software Engineering", code: "SE" },
-]);
-
-function buscarAluno() {
-  console.log("Searching for:", searchQuery.value);
-}
-
-function buscarAlunoByCurso() {
-  console.log("Searching for:", searchQueryByCurso.value);
-}
-
 function openDialogEnviarMoedas() {
   showDialog.value = true;
 }
 
-
-
-onMounted(() => {
+function renderAlunos() {
   professorService.getAlunos().then((response) => {
     alunos.value = response.data;
   });
+}
+renderAlunos();
 
-  // alunos.value = [
-  //   {
-  //     id: 1,
-  //     fotoPerfil: douglas01,
-  //     nome: "Douglas Machado",
-  //     curso: "Engenharia",
-  //     acaoImg: aracoinPNG,
-  //   },
-  //   {
-  //     id: 2,
-  //     fotoPerfil: douglas02,
-  //     nome: "Douglas Machado 02",
-  //     curso: "Computação",
-  //     acaoImg: aracoinPNG,
-  //   },
-  //   {
-  //     id: 3,
-  //     fotoPerfil: douglas03,
-  //     nome: "Douglas Machado 03",
-  //     curso: "Fisica",
-  //     acaoImg: aracoinPNG,
-  //   },
-  //   {
-  //     id: 1,
-  //     fotoPerfil: douglas01,
-  //     nome: "Douglas Machado",
-  //     curso: "Engenharia",
-  //     acaoImg: aracoinPNG,
-  //   },
-  //   {
-  //     id: 2,
-  //     fotoPerfil: douglas02,
-  //     nome: "Douglas Machado 02",
-  //     curso: "Computação",
-  //     acaoImg: aracoinPNG,
-  //   },
-  //   {
-  //     id: 3,
-  //     fotoPerfil: douglas03,
-  //     nome: "Douglas Machado 03",
-  //     curso: "Fisica",
-  //     acaoImg: aracoinPNG,
-  //   },
-  //   {
-  //     id: 1,
-  //     fotoPerfil: douglas01,
-  //     nome: "Douglas Machado",
-  //     curso: "Engenharia",
-  //     acaoImg: aracoinPNG,
-  //   },
-  //   {
-  //     id: 2,
-  //     fotoPerfil: douglas02,
-  //     nome: "Douglas Machado 02",
-  //     curso: "Computação",
-  //     acaoImg: aracoinPNG,
-  //   },
-  //   {
-  //     id: 3,
-  //     fotoPerfil: douglas03,
-  //     nome: "Douglas Machado 03",
-  //     curso: "Fisica",
-  //     acaoImg: aracoinPNG,
-  //   },
-  //   {
-  //     id: 1,
-  //     fotoPerfil: douglas01,
-  //     nome: "Douglas Machado",
-  //     curso: "Engenharia",
-  //     acaoImg: aracoinPNG,
-  //   },
-  //   {
-  //     id: 2,
-  //     fotoPerfil: douglas02,
-  //     nome: "Douglas Machado 02",
-  //     curso: "Computação",
-  //     acaoImg: aracoinPNG,
-  //   },
-  //   {
-  //     id: 3,
-  //     fotoPerfil: douglas03,
-  //     nome: "Douglas Machado 03",
-  //     curso: "Fisica",
-  //     acaoImg: aracoinPNG,
-  //   },
-  //   {
-  //     id: 1,
-  //     fotoPerfil: douglas01,
-  //     nome: "Douglas Machado",
-  //     curso: "Engenharia",
-  //     acaoImg: aracoinPNG,
-  //   },
-  //   {
-  //     id: 2,
-  //     fotoPerfil: douglas02,
-  //     nome: "Douglas Machado 02",
-  //     curso: "Computação",
-  //     acaoImg: aracoinPNG,
-  //   },
-  //   {
-  //     id: 3,
-  //     fotoPerfil: douglas03,
-  //     nome: "Douglas Machado 03",
-  //     curso: "Fisica",
-  //     acaoImg: aracoinPNG,
-  //   },
-  // ];
-});
 </script>
 
 
@@ -290,6 +146,7 @@ onMounted(() => {
   margin-right: 5px;
   outline: none;
 }
+
 .buttonEnviarAracoin {
   background: none;
   border: none;
@@ -313,7 +170,7 @@ onMounted(() => {
   color: #333;
 }
 
-.headerDialog{
+.headerDialog {
   font-size: 1.5rem;
   font-weight: bold;
   padding: 1rem;

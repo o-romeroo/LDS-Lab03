@@ -10,7 +10,23 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('../views/Login/Login.vue')
+      component: () => import('../views/Login/Login.vue'),
+      beforeEnter: (to, from, next) => {
+        let userType = localStorage.getItem('userType');
+        if (userType === 'Professor') {
+          next('/professor/home');
+        }
+
+        if (userType === 'Aluno') {
+          next('/aluno/home');
+        }
+
+        if (userType === 'Empresa') {
+          next('/empresa/home');
+        }
+        next();
+
+      }
     }
     ,
     {

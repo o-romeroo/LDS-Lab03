@@ -101,13 +101,23 @@
 import Toolbar from "primevue/toolbar";
 import Button from "primevue/button";
 import Avatar from "primevue/avatar";
+import professorService from '../services/professorService.js';
 import { ref } from "vue";
+
 import { onMounted, onBeforeUnmount } from 'vue';
 
 const usuarioType = ref(localStorage.getItem("userType"));
 const userId = ref(localStorage.getItem("userId"));
 
-const saldo = ref(1240);
+const saldo = ref(0);
+
+
+function consultaSaldo(){
+  professorService.consultaHeader(userId.value).then((response) => {
+    saldo.value = response.data.saldoMoedas;
+  });
+}
+
 
 function logout() {
   localStorage.removeItem("userType");
@@ -115,8 +125,9 @@ function logout() {
   window.location.href = "/";
 }
 
+
 onMounted(() => {
-  console.log('Toolbar mounted');
+  consultaSaldo();
 });
 
 </script>
