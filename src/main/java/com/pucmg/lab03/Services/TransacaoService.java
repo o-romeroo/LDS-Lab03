@@ -143,14 +143,17 @@ public class TransacaoService {
 
     }
 
+    @Transactional
     public List<Transacao> buscarTransacoesEnviadas(Long remetenteId) {
         return transacaoRepository.findByRemetenteId(remetenteId);
     }
 
+    @Transactional
     public List<Transacao> buscarTransacoesRecebidas(Long destinatarioId) {
         return transacaoRepository.findByDestinatarioId(destinatarioId);
     }
 
+    @Transactional
     public List<Transacao> buscarTodasTransacoes(Long usuarioId) {
         return transacaoRepository.findByUsuarioId(usuarioId);
     }
