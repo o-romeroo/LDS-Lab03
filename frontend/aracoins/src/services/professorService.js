@@ -12,12 +12,22 @@ const apiClient = axios.create({
 });
 
 export default {
-    
+
     consultaHeader() {
-        return apiClient.get('/usuario/header?id='+localStorage.getItem('userId'));
+        return apiClient.get('/usuario/header?id=' + localStorage.getItem('userId'));
     },
 
     getAlunos() {
         return apiClient.get('/aluno/todos');
+    },
+
+    getRankingAlunos() {
+        return apiClient.get('/ranking/todos');
+    },
+
+    getExtrato(){
+        return apiClient.get('/transacao/professor/enviadas/' + localStorage.getItem('userId'));
     }
+
+
 }

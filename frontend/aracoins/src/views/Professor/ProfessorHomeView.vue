@@ -57,7 +57,7 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted,onBeforeMount } from "vue";
 import { ref } from "vue";
 
 import InputText from "primevue/inputtext";
@@ -87,6 +87,7 @@ function renderAlunos() {
     alunos.value = response.data;
   });
 }
+
 renderAlunos();
 
 </script>

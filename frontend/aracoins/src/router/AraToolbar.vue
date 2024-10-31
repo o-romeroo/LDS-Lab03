@@ -27,7 +27,7 @@
         <span class="saldo">{{ saldo }}</span>
 
         <img src="@/assets/aracoin.png" alt="AraCoin" style="width: 40px; height: 32px; margin-right: 1rem" />
-        <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
+        <Avatar :image=imgPerfil
           style="width: 32px; height: 32px" />
         <div class="contentUser">
           <Button icon="pi pi-sign-out" class="p-button-rounded p-button-danger" @click="logout" />
@@ -110,11 +110,13 @@ const usuarioType = ref(localStorage.getItem("userType"));
 const userId = ref(localStorage.getItem("userId"));
 
 const saldo = ref(0);
+const imgPerfil = ref('');
 
 
 function consultaSaldo(){
   professorService.consultaHeader(userId.value).then((response) => {
     saldo.value = response.data.saldoMoedas;
+    imgPerfil.value = response.data.fotoPerfil;
   });
 }
 

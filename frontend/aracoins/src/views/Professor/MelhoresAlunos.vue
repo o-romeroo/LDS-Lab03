@@ -1,57 +1,30 @@
 <template>
   <div>
     <div class="container">
-      <img class="fotoPerfilPrimeiro" :src="douglas03" alt="Foto do Perfil" />
+      <img class="fotoPerfilPrimeiro" v-if="alunos.length" :src="alunos[0]?.fotoPerfil || ''" alt="Foto do Perfil" />
 
-      <img class="fotoPerfilSegundo" :src="douglas02" alt="Foto do Perfil" />
+      <img class="fotoPerfilSegundo" v-if="alunos.length" :src="alunos[1]?.fotoPerfil || ''" alt="Foto do Perfil" />
 
-      <img class="fotoPerfilTerceiro" :src="douglas01" alt="Foto do Perfil" />
+      <img class="fotoPerfilTerceiro" v-if="alunos.length" :src="alunos[2]?.fotoPerfil || ''" alt="Foto do Perfil" />
 
       <img :src="podium" class="fotoPodium" />
     </div>
-    <DataTable
-      class="dataTableHowView"
-      :value="alunos"
-      :paginator="true"
-      stripedRows 
-      :rows="6"
-    >
+    <DataTable class="dataTableHowView" :value="alunos" :paginator="true" stripedRows :rows="6">
       <Column style="width: 33%" field="nome" header="Nome">
         <template #body="slotProps">
-          <div
-            style="
+          <div style="
               display: flex;
               justify-content: flex-start;
               align-items: center;
               gap: 1rem;
-            "
-          >
-            <img
-              v-if="slotProps.data.posicaoRanking === 1"
-              :src="first_medal"
-              style="width: 25px; height: auto"
-            />
-            <img
-              v-if="slotProps.data.posicaoRanking === 2"
-              :src="second_medal"
-              style="width: 25px; height: auto"
-            />
-            <img
-              v-if="slotProps.data.posicaoRanking === 3"
-              :src="third_medal"
-              style="width: 25px; height: auto"
-            />
-            <span
-              v-if="slotProps.data.posicaoRanking > 3"
-              class="positionLabel"
-              >{{ slotProps.data.posicaoRanking + "º" }}</span
-            >
+            ">
+            <img v-if="slotProps.data.posicaoRanking === 1" :src="first_medal" style="width: 25px; height: auto" />
+            <img v-if="slotProps.data.posicaoRanking === 2" :src="second_medal" style="width: 25px; height: auto" />
+            <img v-if="slotProps.data.posicaoRanking === 3" :src="third_medal" style="width: 25px; height: auto" />
+            <span v-if="slotProps.data.posicaoRanking > 3" class="positionLabel">{{ slotProps.data.posicaoRanking + "º"
+              }}</span>
 
-            <img
-              class="fotoPerfil"
-              :src="slotProps.data.fotoPerfil"
-              alt="Foto do Perfil"
-            />
+            <img class="fotoPerfil" :src="slotProps.data.fotoPerfil" alt="Foto do Perfil" />
 
             {{ slotProps.data.nome }}
           </div>
@@ -59,11 +32,7 @@
       </Column>
 
       <Column style="width: 33%" field="curso" header="Curso" />
-      <Column
-        style="width: 33%"
-        field="totalMoedasRecebidas"
-        header="Aracoins Recebidas"
-      >
+      <Column style="width: 33%" field="totalMoedasRecebidas" header="Aracoins Recebidas">
         <template #body="slotProps">
           <div class="contentAracoinsRecebidas">
             <button class="buttonEnviarAracoin">
@@ -96,10 +65,13 @@ import podium from "../../assets/podium.png";
 import first_medal from "../../assets/first_medal.png";
 import second_medal from "../../assets/second_medal.png";
 import third_medal from "../../assets/third_medal.png";
+import professorService from "../../services/professorService.js";
 
 const searchQuery = ref("");
 const searchQueryByCurso = ref("");
-const alunos = ref([]);
+const alunos = ref([
+
+]);
 
 
 const courses = ref([
@@ -119,44 +91,10 @@ function buscarAlunoByCurso() {
 
 
 onMounted(() => {
-  // alunoService.getAlunos().then((response) => {
-  //   alunos.value = response.data;
-  // });
+  professorService.getRankingAlunos().then((response) => {
+    alunos.value = response.data.map(e => ({ ...e, acaoImg: aracoinPNG }));
+  });
 
-  alunos.value = [
-    {
-      posicaoRanking: 1,
-      fotoPerfil: douglas01,
-      nome: "Douglas Machado",
-      curso: "Engenharia",
-      acaoImg: aracoinPNG,
-      totalMoedasRecebidas: 100,
-    },
-    {
-      posicaoRanking: 2,
-      fotoPerfil: douglas02,
-      nome: "Douglas Machado 02",
-      curso: "Computação",
-      acaoImg: aracoinPNG,
-      totalMoedasRecebidas: 80,
-    },
-    {
-      posicaoRanking: 3,
-      fotoPerfil: douglas03,
-      nome: "Douglas Machado 03",
-      curso: "Fisica",
-      acaoImg: aracoinPNG,
-      totalMoedasRecebidas: 50,
-    },
-    {
-      posicaoRanking: 4,
-      fotoPerfil: douglas01,
-      nome: "Alguém",
-      curso: "Engenharia",
-      acaoImg: aracoinPNG,
-      totalMoedasRecebidas: 40,
-    },
-  ];
 });
 </script>
 
@@ -164,7 +102,8 @@ onMounted(() => {
 <style scoped>
 .container {
   position: relative;
-  width: 80vw; /* Ajusta a largura do contêiner ao tamanho da tela */
+  width: 80vw;
+  /* Ajusta a largura do contêiner ao tamanho da tela */
   /* height: 50vh;  */
   display: flex;
   justify-content: center;
@@ -175,10 +114,12 @@ onMounted(() => {
 .fotoPerfilPrimeiro,
 .fotoPerfilSegundo,
 .fotoPerfilTerceiro {
-  border-radius: 50%; /* garante círculo perfeito */
+  border-radius: 50%;
+  /* garante círculo perfeito */
   position: absolute;
   object-fit: cover;
-  z-index: 2; /* Acima do pódio */
+  z-index: 2;
+  /* Acima do pódio */
 }
 
 .fotoPerfilPrimeiro {
@@ -210,6 +151,7 @@ onMounted(() => {
   height: 4vw;
   margin-left: -4vw;
 }
+
 .dataTableHowView {
   padding: 1rem;
 }

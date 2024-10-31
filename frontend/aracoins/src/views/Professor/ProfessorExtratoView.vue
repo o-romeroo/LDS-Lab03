@@ -84,7 +84,7 @@ import { ref } from "vue";
 import InputText from "primevue/inputtext";
 import Select from "primevue/select";
 import DataTable from "primevue/datatable";
-import alunoService from "../../services/alunoService.js";
+import professorService from "../../services/professorService.js";
 import Column from "primevue/column";
 
 import aracoinPNG from "../../assets/aracoin.png";
@@ -95,41 +95,11 @@ import douglas03 from "../../assets/douglas03.jpg";
 
 const extratos = ref([]);
 function performSearch() {
-  console.log("Searching for:", searchQuery.value);
+  
 }
 
 onMounted(() => {
-  // alunoService.getAlunos().then((response) => {
-  extratos.value = [
-    {
-      fotoRemetente: douglas01,
-      fotoDestinatario: "",
-      montante: 150,
-      destinatario: "douglas",
-      motivo: "Motivo Qualquer",
-      data: "2024-10-16",
-      tipoTransacao: "saida",
-    },
-    {
-      fotoRemetente: douglas02,
-      fotoDestinatario: "",
-      montante: 220,
-      destinatario: "PUC MINAS CORDENAÇÃO",
-      motivo: "Motivo Qualquer 1",
-      data: "2024-10-16",
-      tipoTransacao: "entrada",
-    },
-    {
-      fotoRemetente: douglas01,
-      fotoDestinatario: "",
-      montante: 60,
-      destinatario: "douglasGG",
-      motivo: "Motivo Qualquer 2",
-      data: "2024-10-16",
-      tipoTransacao: "saida",
-    },
-  ];
-  // });
+  professorService.getExtrato().then(response => extratos.value = response.data.map(e=>({...e, tipoTransacao: 'saida'})));
 });
 </script>
 
