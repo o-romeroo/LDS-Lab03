@@ -49,6 +49,7 @@ public class VantagemController {
     public ResponseEntity<List<VantagemResponseDTO>> buscarTodasVantagens() {
         List<VantagemResponseDTO> vantagensDto = vantagemService.buscarTodasVantagens().stream()
                 .map(vantagem -> new VantagemResponseDTO(
+                        vantagem.getId(),
                         (vantagem.getEmpresa() == null)  ? vantagem.getInstituicaoEnsino().getNome()
                                 : vantagem.getEmpresa().getNome(),
                         vantagem.getImagem(),
@@ -84,6 +85,7 @@ public class VantagemController {
     public ResponseEntity<List<VantagemResponseDTO>> buscarTodasVantagensUsuario(@RequestParam Long usuarioId) {
         List<VantagemResponseDTO> vantagensDto = vantagemService.buscarVantagensPorUsuario(usuarioId).stream()
                 .map(vantagem -> new VantagemResponseDTO(
+                    vantagem.getId(),
                     (vantagem.getEmpresa() == null) ? vantagem.getInstituicaoEnsino().getNome() 
                     : vantagem.getEmpresa().getNome(),
                                 
