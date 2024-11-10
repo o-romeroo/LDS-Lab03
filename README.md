@@ -24,3 +24,10 @@
 | Enviar Moedas	| Professor	| Enviar moedas para meus alunos	| Reconhecer seu mérito por bom comportamento e participação |
 |Consultar Extrato	| Professor |	Visualizar meu extrato de moedas	| Acompanhar meu saldo, envios realizados e gerenciar a distribuição de moedas |
 |Realizar Parceria	| Empresa |	Me cadastrar como parceira no sistema	| Oferecer vantagens aos alunos e atrair novos clientes |
+
+### Diagramas de Sequência
+#### Diagrama de Sequência Cadastro de Vantagens (Empresa)
+![Sequence Diagram](./images/sequenceDiagram2-lab3.png)
+
+#### Diagrama de Sequência Listagem de Vantagens (Aluno)
+![Sequence Diagram](./images/sequenceDiagram1-lab3.png)
