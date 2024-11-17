@@ -31,3 +31,6 @@
 
 #### Diagrama de Sequência Listagem de Vantagens (Aluno)
 ![Sequence Diagram](./images/sequenceDiagram1-lab3.png)
+
+#### Diagrama de Sequência Troca de Vantagens (Aluno)
+![Sequence Diagram](./images/sequenceDiagram3-lab3.png)
