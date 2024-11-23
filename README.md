@@ -34,3 +34,10 @@
 
 #### Diagrama de Sequência Troca de Vantagens (Aluno)
 ![Sequence Diagram](./images/sequenceDiagram3-lab3.png)
+
+### Diagramas de Comunicação
+#### Diagrama de Comunicação Comprar Vantagem (Aluno)
+![Comunication Diagram](./images/comunicationDiagram1-lab3.png)
+
+#### Diagrama de Comunicação Enviar Moedas (Professor)
+![Comunication Diagram](./images/comunicationDiagram2-lab3.png)
