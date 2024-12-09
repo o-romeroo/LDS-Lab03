@@ -22,11 +22,8 @@ public class AuthController {
     @Operation(summary = "Realizar login")
     @GetMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequest) {
-        try {
+
             LoginResponseDTO response = authService.login(loginRequest.getLogin(), loginRequest.getSenha());
             return ResponseEntity.ok(response);  
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(401).body(null);  
-        }
     }
 }

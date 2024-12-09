@@ -1,7 +1,7 @@
 package com.pucmg.lab03.dto;
 
 
-import java.util.Base64;
+import com.pucmg.lab03.utils.ImageUtils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +17,7 @@ public class AlunoResponseDTO {
 
     public AlunoResponseDTO(Long id, byte[] fotoPerfil, String nome, String curso) {
         this.id = id;
-        this.fotoPerfil = "data:image/png;base64," + Base64.getEncoder().encodeToString(fotoPerfil);  // Converte para Base64
+        this.fotoPerfil = ImageUtils.convertToBase64(fotoPerfil);  // Converte para Base64
         this.nome = nome;
         this.curso = curso;
     }

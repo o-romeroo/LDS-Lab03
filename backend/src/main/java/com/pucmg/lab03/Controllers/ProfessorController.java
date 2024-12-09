@@ -29,29 +29,19 @@ public class ProfessorController {
     @Operation(summary = "Cadastrar um novo professor", description = "Caso faça uma requisição sem dar upload de uma imagem, desmarcar a caixa \"<b>Send empty value</b>\".<br>" +
                         "Tentei de tudo pra tratar esse valor empty e não consegui.")
     @PostMapping(value = "/cadastrar", consumes = "multipart/form-data")
-    public ResponseEntity<String> cadastrarProfessor(@ModelAttribute ProfessorRequestDTO professorRequestDTO) {
-        try {
+    public ResponseEntity<String> cadastrarProfessor(@ModelAttribute ProfessorRequestDTO professorRequestDTO) throws IOException {
             professorService.criarProfessor(professorRequestDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body("Professor criado com sucesso!");
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao salvar professor.");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
     }
 
     @Operation(summary = "Obter o saldo e a foto de perfil de um professor para o header")
     @GetMapping("/header")
     public ResponseEntity<ProfessorResponseHeaderDTO> buscarProfessor(@RequestParam Long id) {
-    try {
         Professor professor = professorService.buscarProfessor(id);
 
         ProfessorResponseHeaderDTO ProfessorHeader = new ProfessorResponseHeaderDTO(professor.getSaldoMoedas(), professor.getFotoPerfil());
 
         return ResponseEntity.ok(ProfessorHeader);
-    } catch (RuntimeException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    }
 }
 
 }
