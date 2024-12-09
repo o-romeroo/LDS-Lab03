@@ -1,6 +1,6 @@
 package com.pucmg.lab03.dto;
 
-import java.util.Base64;
+import com.pucmg.lab03.utils.ImageUtils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,7 @@ public class VantagemResponseDTO {
 
     public VantagemResponseDTO(String nome, byte[] imagem, String descricao, int preco) {
         this.nome = nome;
-        this.imagem = "data:image/png;base64," + Base64.getEncoder().encodeToString(imagem); 
+        this.imagem = ImageUtils.convertToBase64(imagem); 
         this.descricao = descricao;
         this.preco = preco;
     }

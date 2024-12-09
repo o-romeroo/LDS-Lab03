@@ -2,7 +2,7 @@ package com.pucmg.lab03.dto;
 
 import java.time.LocalDate;
 
-import java.util.Base64;
+import com.pucmg.lab03.utils.ImageUtils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +29,7 @@ public class ExtratoTodosAlunoResponseDTO {
         this.parteEnvolvida = parteEnvolvida;
         this.detalhes = detalhes;
         this.data = data;
-        this.fotoPerfil = "data:image/png;base64," + Base64.getEncoder().encodeToString(fotoPerfil);  // Converte para Base64
+        this.fotoPerfil = ImageUtils.convertToBase64(fotoPerfil);  // Converte para Base64
         this.tipoTransacao = tipoTransacao;
     }
 
