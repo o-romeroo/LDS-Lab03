@@ -30,28 +30,17 @@ public class EmpresaController {
     @Operation(summary = "Cadastrar uma nova empresa", description = "Caso faça uma requisição sem dar upload de uma imagem, desmarcar a caixa \"<b>Send empty value</b>\".<br>\n" + //
     "Tentei de tudo pra tratar esse valor empty e não consegui.")
     @PostMapping(value = "/cadastrar", consumes = "multipart/form-data")
-    public ResponseEntity<String> cadastrarEmpresa(@ModelAttribute EmpresaRequestDTO empresaDto) {
-        try {
+    public ResponseEntity<String> cadastrarEmpresa(@ModelAttribute EmpresaRequestDTO empresaDto) throws IOException {
             empresaService.criarEmpresa(empresaDto);
             return ResponseEntity.status(HttpStatus.CREATED).body("Empresa criada com sucesso!");
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao salvar empresa.");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
     }
 
     @Operation(summary = "Obter a foto de perfil de uma empresa para o header")
     @GetMapping("/header")
     public ResponseEntity<EmpresaInstituicaoFotoResponseDTO> buscarEmpresa(@RequestParam Long id) {
-        try {
             Empresa empresa = empresaService.buscarEmpresa(id);
             EmpresaInstituicaoFotoResponseDTO empresaResponse = new EmpresaInstituicaoFotoResponseDTO(empresa.getFotoPerfil());
-            return ResponseEntity.ok(empresaResponse);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-        
+            return ResponseEntity.ok(empresaResponse);        
     }
     
 

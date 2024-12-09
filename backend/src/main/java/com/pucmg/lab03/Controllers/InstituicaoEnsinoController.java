@@ -30,27 +30,17 @@ public class InstituicaoEnsinoController {
     @Operation(summary = "Cadastrar uma nova instituição de ensino", description = "Caso faça uma requisição sem dar upload de uma imagem, desmarcar a caixa \"<b>Send empty value</b>\".<br>" + 
                         "Tentei de tudo pra tratar esse valor empty e não consegui.")
     @PostMapping(value = "/cadastrar", consumes = "multipart/form-data")
-    public ResponseEntity<String>cadastrarInstituicaoEnsino(@ModelAttribute InstituicaoEnsinoRequestDTO instituicaoEnsinoDto) {
-        try {
+    public ResponseEntity<String>cadastrarInstituicaoEnsino(@ModelAttribute InstituicaoEnsinoRequestDTO instituicaoEnsinoDto) throws IOException {
             instituicaoEnsinoService.criarInstituicaoEnsino(instituicaoEnsinoDto);
             return ResponseEntity.status(HttpStatus.CREATED).body("Instituição de Ensino criada com sucesso!");
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao salvar instituição de ensino.");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
     }
 
     @Operation(summary = "Obter a foto de perfil de uma instituição de ensino para o header")
     @GetMapping("/header")
     public ResponseEntity<EmpresaInstituicaoFotoResponseDTO> buscarInstituicaoEnsino(@RequestParam Long id) {
-        try {
             InstituicaoEnsino instituicaoEnsino = instituicaoEnsinoService.buscarInstituicaoEnsino(id);
             EmpresaInstituicaoFotoResponseDTO instituicaoEnsinoResponse = new EmpresaInstituicaoFotoResponseDTO(instituicaoEnsino.getFotoPerfil());
             return ResponseEntity.ok(instituicaoEnsinoResponse);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
         
     }
 

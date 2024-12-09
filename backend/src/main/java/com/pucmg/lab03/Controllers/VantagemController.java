@@ -33,15 +33,9 @@ public class VantagemController {
 
     @Operation(summary = "Cadastrar uma nova vantagem (LER A DESCRIÇÃO)", description = "usuarioId é o id do usuário que está cadastrando a vantagem, podendo ser uma InstituicaoEnsino ou Empresa.<br>Caso faça uma requisição sem dar upload de uma imagem, <b>desmarcar</b> a caixa <b>\"Send empty value\"</b>.<br> Tentei de tudo pra tratar esse valor empty e não consegui.")
     @PostMapping(value = "/cadastrar", consumes = "multipart/form-data")
-    public ResponseEntity<String> cadastrarVantagem(@ModelAttribute VantagemRequestDTO vantagemDto) {
-        try {
+    public ResponseEntity<String> cadastrarVantagem(@ModelAttribute VantagemRequestDTO vantagemDto) throws IOException {
             vantagemService.criarVantagem(vantagemDto);
             return ResponseEntity.status(HttpStatus.CREATED).body("Vantagem criada com sucesso!");
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao salvar vantagem.");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
     }
 
     @Operation(summary = "Lista com todas as vantagens")
@@ -68,15 +62,9 @@ public class VantagemController {
 
     @Operation(summary = "Editar uma vantagem (LER DESCRICAO)", description = "vantagemId é o id da vantagem que será editada.<br>Caso faça uma requisição sem dar upload de uma imagem, <b>desmarcar</b> a caixa \"<b>Send empty value</b>\".<br> Tentei de tudo pra tratar esse valor empty e não consegui.")
     @PutMapping(value = "/editar", consumes = "multipart/form-data")
-    public ResponseEntity<String> editarVantagem(@RequestParam Long vantagemId, @ModelAttribute VantagemUpdateDTO vantagemDto) {
-        try {
+    public ResponseEntity<String> editarVantagem(@RequestParam Long vantagemId, @ModelAttribute VantagemUpdateDTO vantagemDto) throws IOException {
             vantagemService.editarVantagem(vantagemId, vantagemDto);
             return ResponseEntity.status(HttpStatus.CREATED).body("Vantagem atualizada com sucesso!");
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao salvar vantagem.");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
     }
 
     @Operation(summary = "Lista com todas as vantagens de uma empresa ou instituição de ensino")

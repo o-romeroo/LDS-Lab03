@@ -1,7 +1,6 @@
 package com.pucmg.lab03.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,13 +45,9 @@ public class TransacaoController {
                 Usuario destinatario = usuarioRepository.findById(transacaoRequest.getDestinatarioId())
                                 .orElseThrow(() -> new RuntimeException("Destinatário não encontrado"));
 
-                try {
                         transacaoService.professorTransferirMoedas(remetente, destinatario, transacaoRequest.getValor(),
                                         transacaoRequest.getMotivo());
                         return ResponseEntity.ok("Transferência realizada com sucesso!");
-                } catch (RuntimeException e) {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-                }
         }
 
         @Operation(summary = "Lista de todas transacoes enviadas por um professor", description = "{usuarioId} neste caso é o ID do professor")
@@ -140,12 +135,9 @@ public class TransacaoController {
         @Operation(summary = "Compra de vantagem por um aluno", description = "Debita moedas de um aluno para comprar uma vantagem.")
         @PostMapping("aluno/compra")
         public ResponseEntity<String> comprarVantagem(@RequestBody ComprarVantagemRequestDTO request) {
-                try {
                         transacaoService.alunoComprarVantagem(request.getAlunoId(), request.getVantagemId());
                         return ResponseEntity.ok("Vantagem comprada com sucesso!");
-                } catch (RuntimeException e) {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-                }
+
         }
 
 }
